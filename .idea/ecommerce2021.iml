@@ -24,6 +24,7 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/laminas/laminas-code" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/laminas/laminas-eventmanager" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/laminas/laminas-zendframework-bridge" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/nikic/php-parser" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/psr/cache" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/psr/container" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/psr/event-dispatcher" />
@@ -47,6 +48,7 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/http-client-contracts" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/http-foundation" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/http-kernel" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/maker-bundle" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/polyfill-intl-grapheme" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/polyfill-intl-normalizer" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/polyfill-mbstring" />
@@ -91,6 +93,7 @@
           <root url="file://$MODULE_DIR$/vendor/laminas/laminas-code" />
           <root url="file://$MODULE_DIR$/vendor/laminas/laminas-eventmanager" />
           <root url="file://$MODULE_DIR$/vendor/laminas/laminas-zendframework-bridge" />
+          <root url="file://$MODULE_DIR$/vendor/nikic/php-parser" />
           <root url="file://$MODULE_DIR$/vendor/psr/cache" />
           <root url="file://$MODULE_DIR$/vendor/psr/container" />
           <root url="file://$MODULE_DIR$/vendor/psr/event-dispatcher" />
@@ -114,6 +117,7 @@
           <root url="file://$MODULE_DIR$/vendor/symfony/http-client-contracts" />
           <root url="file://$MODULE_DIR$/vendor/symfony/http-foundation" />
           <root url="file://$MODULE_DIR$/vendor/symfony/http-kernel" />
+          <root url="file://$MODULE_DIR$/vendor/symfony/maker-bundle" />
           <root url="file://$MODULE_DIR$/vendor/symfony/polyfill-intl-grapheme" />
           <root url="file://$MODULE_DIR$/vendor/symfony/polyfill-intl-normalizer" />
           <root url="file://$MODULE_DIR$/vendor/symfony/polyfill-mbstring" />
@@ -154,6 +158,7 @@
           <root url="file://$MODULE_DIR$/vendor/laminas/laminas-code" />
           <root url="file://$MODULE_DIR$/vendor/laminas/laminas-eventmanager" />
           <root url="file://$MODULE_DIR$/vendor/laminas/laminas-zendframework-bridge" />
+          <root url="file://$MODULE_DIR$/vendor/nikic/php-parser" />
           <root url="file://$MODULE_DIR$/vendor/psr/cache" />
           <root url="file://$MODULE_DIR$/vendor/psr/container" />
           <root url="file://$MODULE_DIR$/vendor/psr/event-dispatcher" />
@@ -177,6 +182,7 @@
           <root url="file://$MODULE_DIR$/vendor/symfony/http-client-contracts" />
           <root url="file://$MODULE_DIR$/vendor/symfony/http-foundation" />
           <root url="file://$MODULE_DIR$/vendor/symfony/http-kernel" />
+          <root url="file://$MODULE_DIR$/vendor/symfony/maker-bundle" />
           <root url="file://$MODULE_DIR$/vendor/symfony/polyfill-intl-grapheme" />
           <root url="file://$MODULE_DIR$/vendor/symfony/polyfill-intl-normalizer" />
           <root url="file://$MODULE_DIR$/vendor/symfony/polyfill-mbstring" />
