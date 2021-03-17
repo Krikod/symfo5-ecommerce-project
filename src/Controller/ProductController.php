@@ -64,6 +64,7 @@ class ProductController extends AbstractController
 	 * @Route("/admin/produit/{id}/editer", name="product_edit")
 	 */
 	public function edit($id, Request $request, ProductRepository $repo, EntityManagerInterface $em, SluggerInterface $slugger) {
+		// todo voir problème slug qui change -> rediriger avec l'id et non le slug
 		$product = $repo->find($id);
 		$form = $this->createForm(ProductType::class, $product);
 		$form->handleRequest($request);
