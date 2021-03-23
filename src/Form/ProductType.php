@@ -34,7 +34,8 @@ class ProductType extends AbstractType
 		        'label' => 'Prix',
 		        'attr' => [
 			        'placeholder' => 'Tapez le prix du produit'
-		        ]
+		        ],
+		        'divisor' => 100
 	        ])
 	        ->add('mainPicture', UrlType::class, [
 		        'label' => 'Image du produit',
