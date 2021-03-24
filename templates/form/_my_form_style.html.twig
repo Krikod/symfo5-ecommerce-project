@@ -1,5 +1,10 @@
 {# templates/form/_my_form_style.html.twig #}
 
+{# inspired from:
+https://stackoverflow.com/questions/58432910/how-to-css-customize-symfony-form-errors-with-bootstrap-and-twig
+https://symfony.com/doc/current/form/form_themes.html#customizing-the-form-validation-errors
+ #}
+
 {#{% extends 'bootstrap_4_layout.html.twig' %}#}
 
 {% block form_errors %}
@@ -9,7 +14,7 @@
                 {% for error in errors %}
                     <span class="d-block">
                     <span class="form-error-icon badge badge-danger text-uppercase">
-                        {{ 'Erreur'|trans({}, 'validators') }}
+                        {{ 'issou !!!'|trans({}, 'validators') }}
                     </span>
                     <span class="form-error-message">{{ error.message }}</span>
                 </span>
