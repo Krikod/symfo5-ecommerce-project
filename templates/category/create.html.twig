@@ -8,6 +8,8 @@
 
     <h1>Ajouter une catégorie</h1>
 
+    {% form_theme formView 'form/_my_form_style.html.twig' %}
+
     {{ form_start(formView, {'attr': {'novalidate':'novalidate'}}) }}
     {{ form_errors(formView) }}
 
