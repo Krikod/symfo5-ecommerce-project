@@ -14,13 +14,13 @@ https://symfony.com/doc/current/form/form_themes.html#customizing-the-form-valid
                 {% for error in errors %}
                     <span class="d-block">
                     <span class="form-error-icon badge badge-danger text-uppercase">
-                        {{ 'issou !!!'|trans({}, 'validators') }}
+                        {{ 'erreur'|trans({}, 'validators') }}
                     </span>
                     <span class="form-error-message">{{ error.message }}</span>
                 </span>
                 {% endfor %}
 
         {% else %}
-            {# ... displays the errors for a single field #}
+             {#... displays the errors for a single field#}
     {% endif %}
 {% endblock form_errors %}
