@@ -41,13 +41,6 @@ class CategoryController extends AbstractController {
 
 	/**
 	 * @Route("/admin/categorie/{id}/editer", name="category_edit")
-	 *
-	 * @param $id
-	 * @param EntityManagerInterface $em
-	 * @param Request $request
-	 * @param CategoryRepository $repo
-	 *
-	 * @return Response
 	 */
 	public function edit($id, EntityManagerInterface $em, Request $request, CategoryRepository $repo) : Response {
 		$category = $repo->find($id);
