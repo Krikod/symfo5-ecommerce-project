@@ -24,6 +24,13 @@
     <body>
     {% include 'shared/_navbar.html.twig' %}
     <div class="container pt-5 pb-3">
+        {% for rubrique, messages in app.flashes %}
+            <div class="div alert alert-{{ rubrique }}">
+                {% for message in messages %}
+                    <p>{{ message }}</p>
+                {% endfor %}
+            </div>
+        {% endfor %}
         {% block body %}{% endblock %}
     </div>
     </body>
