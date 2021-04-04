@@ -22,7 +22,7 @@
                     {# |number_format(2, ',', ' ')  #}
                     <td>{{ (item.product.price) / 100 }} {{ 'EUR'|currency_symbol }}</td>
                     <td>{{ item.qty }}</td>
-                    <td>{{ (item.qty * item.product.price) / 100 }} {{ 'EUR'|currency_symbol }}</td>
+                    <td>{{ item.total / 100 }} {{ 'EUR'|currency_symbol }}</td>
                 </tr>
             {% endfor %}
         </tbody>
