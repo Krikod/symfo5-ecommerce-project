@@ -5,3 +5,4 @@ twig:
         - 'form/_my_form_style.html.twig'
     globals:
         categoryRepository: '@App\Repository\CategoryRepository'
+        cartService: '@App\Cart\CartService'
