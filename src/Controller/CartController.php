@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Cart\CartService;
 use App\Repository\ProductRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -15,24 +16,15 @@ class CartController extends AbstractController
 	 * @Route("/panier/ajouter/{id}", name="cart_add",
 	 *     requirements={"id":"\d+"})
 	 */
-    public function add($id, ProductRepository $repo, SessionInterface $session): Response
+    public function add($id, ProductRepository $repo, CartService $cart_service): Response
     {
     	$product = $repo->find( $id);
+
     	if (!$product) {
     		throw $this->createNotFoundException("Le produit $id n'existe pas");
 	    }
-        $cart = $session->get( 'cart', []);
 
-        if (array_key_exists( $id, $cart)) {
-        	$cart[$id]++;
-        } else {
-        	$cart[$id] = 1;
-        }
-
-        $session->set( 'cart', $cart);
-//	    $request->getSession()->remove( 'cart');
-//	    dd( $request->getSession()->get( 'cart'));
-//      dd( $session->get( 'cart'));
+	    $cart_service->add( $id);
 
 	    $this->addFlash( 'success', "Le produit a bien été ajouté au panier");
 
@@ -46,21 +38,10 @@ class CartController extends AbstractController
 	/**
 	 * @Route("/panier", name="cart_show")
 	 */
-	public function show( SessionInterface $session, ProductRepository $repo ): Response {
+	public function show(CartService $cart_service ): Response {
 
-		$detailedCart = [];
-		$total = 0;
-//		dd( $session->get( 'cart'));
-
-		foreach ($session->get('cart', []) as $id => $qty) {
-			$product = $repo->find( $id);
-			$detailedCart[] = [
-				'product' => $product,
-				'qty' => $qty
-			];
-			$total += ($product->getPrice() * $qty);
-		}
-		dump( $detailedCart);
+		$detailedCart = $cart_service->getDetailedCartItems();
+		$total = $cart_service->getTotal();
 
 		return $this->render( 'cart/index.html.twig', [
 			'items' => $detailedCart,
