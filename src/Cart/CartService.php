@@ -33,9 +33,23 @@ class CartService {
 		$this->session->set( 'cart', $cart);
 	}
 
+	public function decrement(int $id) {
+		$cart = $this->session->get( 'cart', []);
+		if (!array_key_exists( $id, $cart)) {
+			return;
+		}
+		if ($cart[$id] === 1) {
+			$this->remove( $id);
+			return;
+		} else {
+			$cart[$id]--;
+			$this->session->set( 'cart', $cart);
+		}
+	}
+
 	public function getTotal(  ) : int {
 		$total = 0;
-		foreach ($this->session->get( 'cart') as $id => $qty) {
+		foreach ($this->session->get( 'cart', []) as $id => $qty) {
 			$product = $this->repo->find( $id);
 			if (!$product) {
 				continue;
@@ -47,15 +61,13 @@ class CartService {
 
 	public function getDetailedCartItems(  ) : array {
 		$detailedCart = [];
-		foreach ($this->session->get( 'cart') as $id => $qty) {
+		foreach ($this->session->get( 'cart', []) as $id => $qty) {
 			$product = $this->repo->find( $id);
 			if (!$product) {
 				continue;
 			}
 			$detailedCart[] = new CartItem( $product, $qty);
-
 		}
 		return $detailedCart;
 	}
-
 }
