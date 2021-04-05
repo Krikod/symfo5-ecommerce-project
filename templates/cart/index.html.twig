@@ -13,6 +13,7 @@
             <th>Prix</th>
             <th>Quantité</th>
             <th>Total</th>
+            <th></th>
         </tr>
         </thead>
         <tbody>
@@ -23,6 +24,11 @@
                     <td>{{ (item.product.price) / 100 }} {{ 'EUR'|currency_symbol }}</td>
                     <td>{{ item.qty }}</td>
                     <td>{{ item.total / 100 }} {{ 'EUR'|currency_symbol }}</td>
+                    <td>
+                        <a href="{{ path('cart_delete', {'id': item.product.id}) }}" class="btn btn-danger">
+                            <i class="fas fa-trash"></i>
+                        </a>
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>

@@ -4,6 +4,7 @@ namespace App\Cart;
 
 use App\Repository\ProductRepository;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Routing\Annotation\Route;
 
 class CartService {
 
@@ -24,6 +25,12 @@ class CartService {
 		}
 		$this->session->set( 'cart', $cart);
 		// $request->getSession()->remove( 'cart');
+	}
+
+	public function remove($id) {
+		$cart = $this->session->get( 'cart', []);
+		unset( $cart[$id]);
+		$this->session->set( 'cart', $cart);
 	}
 
 	public function getTotal(  ) : int {

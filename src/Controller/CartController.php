@@ -36,6 +36,18 @@ class CartController extends AbstractController
     }
 
 	/**
+	 * @Route("/panier/supprimer/{id}", name="cart_delete", requirements={"id":"\d+"})
+	 */
+	public function delete($id, ProductRepository $repo, CartService $cart_service) {
+		if (!$repo->find( $id)) {
+			throw $this->createNotFoundException("Le produit $id n'existe pas et ne peut être supprimé");
+		}
+		$cart_service->remove($id);
+		$this->addFlash( 'success', 'Le produit a bien été supprimé du panier');
+		return $this->redirectToRoute( 'cart_show');
+    }
+
+	/**
 	 * @Route("/panier", name="cart_show")
 	 */
 	public function show(CartService $cart_service ): Response {
