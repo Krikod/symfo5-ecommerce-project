@@ -4,6 +4,7 @@ namespace App\DataFixtures;
 
 use App\Entity\Category;
 use App\Entity\Product;
+use App\Entity\Purchase;
 use App\Entity\User;
 use Bezhanov\Faker\Provider\Commerce;
 use Bluemmb\Faker\PicsumPhotosProvider;
@@ -39,15 +40,24 @@ class AppFixtures extends Fixture
 		    ->setPassword($hash);
     	$manager->persist( $admin);
 
+    	// array for random relation with purchases
+	    $users = [];
+
+	    // Creation of Users
     	for ($u = 0; $u < 5; $u++) {
     		$user = new User();
     		$hash = $this->encoder->encodePassword( $user, "password");
     		$user->setEmail( "user-$u@gmail.com")
 			    ->setFullName( $faker->name())
 			    ->setPassword( $hash);
+
+    		// We add each user in array $users:
+		    $users[] = $user;
+
     		$manager->persist( $user);
 	    }
 
+	    // Creation of Categories
     	for ($c = 0; $c < 3; $c++) {
     		$category = new Category();
     		$category->setName($faker->department) // Bezhanov
@@ -55,6 +65,7 @@ class AppFixtures extends Fixture
 
     		$manager->persist($category);
 
+    		// Creation of Products linked to Categories
     		for ($p = 0; $p < mt_rand(15, 20); $p++) {
     			$product = new Product();
     			$product->setName($faker->productName) // Bezhanov
@@ -68,6 +79,25 @@ class AppFixtures extends Fixture
 
     			$manager->persist($product);
 		    }
+	    }
+
+	    // Creation of Purchases
+	    for ($p = 0; $p < mt_rand(20, 40); $p++) {
+    		$purchase = new Purchase();
+
+    		$purchase->setFullName( $faker->name)
+			    ->setAddress( $faker->streetAddress)
+			    ->setPostalCode( $faker->postcode)
+			    ->setCity( $faker->city)
+			    ->setTotal( mt_rand(2000, 30000))
+			    ->setUser( $faker->randomElement($users));
+
+    		// 90% of purchases set to status PAID. The others are PENDING.
+		    if ($faker->boolean(90)) {
+		    	$purchase->setStatus( Purchase::STATUS_PAID);
+		    }
+
+    		$manager->persist( $purchase);
 	    }
 
 	    $manager->flush();
