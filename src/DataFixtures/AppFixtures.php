@@ -5,6 +5,7 @@ namespace App\DataFixtures;
 use App\Entity\Category;
 use App\Entity\Product;
 use App\Entity\Purchase;
+use App\Entity\PurchaseItem;
 use App\Entity\User;
 use Bezhanov\Faker\Provider\Commerce;
 use Bluemmb\Faker\PicsumPhotosProvider;
@@ -58,6 +59,8 @@ class AppFixtures extends Fixture
 	    }
 
 	    // Creation of Categories
+	    $products = [];
+
     	for ($c = 0; $c < 3; $c++) {
     		$category = new Category();
     		$category->setName($faker->department) // Bezhanov
@@ -77,6 +80,7 @@ class AppFixtures extends Fixture
 				    // bluemmb, true=images différentes
 				    ->setMainPicture($faker->imageUrl(400, 400, true));
 
+    			$products[] = $product;
     			$manager->persist($product);
 		    }
 	    }
@@ -90,7 +94,24 @@ class AppFixtures extends Fixture
 			    ->setPostalCode( $faker->postcode)
 			    ->setCity( $faker->city)
 			    ->setTotal( mt_rand(2000, 30000))
-			    ->setUser( $faker->randomElement($users));
+			    ->setUser( $faker->randomElement($users))
+		        ->setPurchasedAt( $faker->dateTimeInInterval('-6 months'));
+
+    		// Add products in Purchase
+    		$selectedProducts = $faker->randomElements($products, mt_rand(3, 7));
+    		foreach ($selectedProducts as $product) {
+    			$purchaseItem = new PurchaseItem();
+    			$purchaseItem->setProduct( $product)
+				    ->setQuantity( mt_rand(1, 5))
+				    ->setProductName( $product->getName())
+				    ->setProductPrice( $product->getPrice())
+				    ->setTotal(
+				    	$purchaseItem->getProductPrice() * $purchaseItem->getQuantity()
+				    )
+				    ->setPurchase( $purchase);
+
+    			$manager->persist( $purchaseItem);
+		    }
 
     		// 90% of purchases set to status PAID. The others are PENDING.
 		    if ($faker->boolean(90)) {

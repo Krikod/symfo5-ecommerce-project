@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PurchaseRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -54,6 +56,22 @@ class Purchase
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="purchases")
      */
     private $User;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $purchasedAt;
+
+    /**
+     * @ORM\OneToMany(targetEntity=PurchaseItem::class, mappedBy="purchase", orphanRemoval=true)
+     */
+    private $purchaseItems;
+
+    public function __construct()
+    {
+        $this->purchaseItems = new ArrayCollection();
+    }
+
 
     public function getId(): ?int
     {
@@ -140,6 +158,48 @@ class Purchase
     public function setUser(?User $User): self
     {
         $this->User = $User;
+
+        return $this;
+    }
+
+    public function getPurchasedAt(): ?\DateTimeInterface
+    {
+        return $this->purchasedAt;
+    }
+
+    public function setPurchasedAt(\DateTimeInterface $purchasedAt): self
+    {
+        $this->purchasedAt = $purchasedAt;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|PurchaseItem[]
+     */
+    public function getPurchaseItems(): Collection
+    {
+        return $this->purchaseItems;
+    }
+
+    public function addPurchaseItem(PurchaseItem $purchaseItem): self
+    {
+        if (!$this->purchaseItems->contains($purchaseItem)) {
+            $this->purchaseItems[] = $purchaseItem;
+            $purchaseItem->setPurchase($this);
+        }
+
+        return $this;
+    }
+
+    public function removePurchaseItem(PurchaseItem $purchaseItem): self
+    {
+        if ($this->purchaseItems->removeElement($purchaseItem)) {
+            // set the owning side to null (unless already changed)
+            if ($purchaseItem->getPurchase() === $this) {
+                $purchaseItem->setPurchase(null);
+            }
+        }
 
         return $this;
     }
