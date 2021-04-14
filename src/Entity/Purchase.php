@@ -55,7 +55,7 @@ class Purchase
     /**
      * @ORM\ManyToOne(targetEntity=User::class, inversedBy="purchases")
      */
-    private $User;
+    private $user;
 
     /**
      * @ORM\Column(type="datetime")
@@ -152,12 +152,12 @@ class Purchase
 
     public function getUser(): ?User
     {
-        return $this->User;
+        return $this->user;
     }
 
-    public function setUser(?User $User): self
+    public function setUser(?User $user): self
     {
-        $this->User = $User;
+        $this->user = $user;
 
         return $this;
     }

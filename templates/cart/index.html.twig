@@ -4,7 +4,9 @@
 
 {% block body %}
     <h1>Mon panier</h1>
+
     {% if items | length > 0 %}
+
         <table class="table">
             <thead>
             <tr>
@@ -42,10 +44,21 @@
             <tfoot>
             <tr>
                 <td colspan="3">Total: </td>
-                <td>{{ total / 100 }} {{ 'EUR'|currency_symbol }}</td>
+                <td colspan="2">{{ total / 100 }} {{ 'EUR'|currency_symbol }}</td>
             </tr>
             </tfoot>
         </table>
+
+        <hr>
+        <h2>Confirmez votre commande en remplissant ce formulaire</h2>
+
+        {{ form_start(confirmationForm, {'action': path('purchase_confirm')}) }}
+        {{ form_widget(confirmationForm) }}
+        <button type="submit" class="btn btn-success">
+            Je confirme !
+        </button>
+        {{ form_end(confirmationForm) }}
+
     {% else %}
         <p class="text-muted">... est bien vide ;(</p>
     {% endif %}
