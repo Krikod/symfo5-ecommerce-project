@@ -47,6 +47,10 @@ class CartService {
 		$this->session->set('cart', $cart);
 	}
 
+	public function empty(  ) {
+		$this->saveCart([]);
+	}
+
 	/**
 	 * @param int $id
 	 */

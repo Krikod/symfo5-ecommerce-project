@@ -46,10 +46,13 @@ class PurchaseConfirmationController extends AbstractController {
 		$user = $this->getUser();
 
 		$purchase = $form->getData();
-		$purchase->setUser($user)->setPurchasedAt(new \DateTime());
+
+		$purchase->setUser($user)
+		         ->setPurchasedAt(new \DateTime())
+		         ->setTotal($this->cartService->getTotal());
+
 		$this->em->persist( $purchase);
 
-//		dd( $purchase);
 		foreach ( $this->cartService->getDetailedCartItems() as $cart_item ) {
 			$purchaseItem = new PurchaseItem();
 			$purchaseItem->setPurchase( $purchase)
@@ -59,13 +62,13 @@ class PurchaseConfirmationController extends AbstractController {
 			             ->setTotal( $cart_item->getTotal())
 			             ->setProductPrice( $cart_item->product->getPrice());
 
-//			$total += $cart_item->getTotal();
-
 			$this->em->persist( $purchaseItem);
 		}
 
-		$purchase->setTotal($this->cartService->getTotal());
 		$this->em->flush();
+
+		$this->cartService->empty();
+
 		$this->addFlash( 'success', 'La commande a bien été enregistrée');
 		return $this->redirectToRoute( 'purchases_index');
 	}
