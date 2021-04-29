@@ -10,7 +10,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class PurchasesListController extends AbstractController
 {
 	/**
-	 * @Route("/commandes", name="purchases_index")
+	 * @Route("/commandes", name="purchase_index")
 	 * @IsGranted("ROLE_USER", message="Vous devez être connecté(e) pour accéder à vos commandes.")
 	 */
     public function index(): Response
