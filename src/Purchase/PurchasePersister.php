@@ -42,10 +42,7 @@ class PurchasePersister {
 	 */
 	public function storePurchase(Purchase $purchase) {
 
-		$purchase->setUser($this->security->getUser())
-		         ->setPurchasedAt(new \DateTime())
-		         ->setTotal($this->cartService->getTotal());
-
+		$purchase->setUser($this->security->getUser());
 		$this->em->persist($purchase);
 
 		foreach ($this->cartService->getDetailedCartItems() as $cart_item) {
