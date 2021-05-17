@@ -15,6 +15,7 @@ class SecurityController extends AbstractController
 	 */
     public function login(AuthenticationUtils $utils): Response
     {
+    	// todo login ne laisse pas à la page visitée
     	$form = $this->createForm( LoginType::class, ['email' => $utils->getLastUsername()]);
 
 //    	$formView = $form->createView();
