@@ -12,9 +12,13 @@ class AmountExtension extends AbstractExtension {
 		];
 	}
 
-	public function amount($value) {
+	public function amount($value, $symbol = ' €', $dec_sep = ',', $thous_sep = ' ') {
 		$finalValue = $value / 100;
-		$finalValue = number_format($finalValue, 2, ',', ' ');
-		return $finalValue . ' €';
-	}
+		$finalValue = number_format($finalValue, 2, $dec_sep, $thous_sep);
+		return $finalValue . $symbol;
+
+		// To override default values in Twig:
+  		// {{ item.product.price|amount(' $', '.', ',') }}
+
+		}
 }
