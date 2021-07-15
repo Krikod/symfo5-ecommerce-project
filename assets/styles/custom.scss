@@ -1,0 +1,30 @@
+// customize some Bootstrap variables
+
+// Variables should follow the `$component-state-property-size` formula for
+
+// consistent naming. Ex: $nav-link-disabled-color and $modal-content-box-shadow-xs.
+
+// Liste des variables customisables dans node_modules/bootstrap/scss/_variables.scss.
+// todo A CUSTOMISER //
+
+//$primary:
+//$secondary:
+//$success:
+$info: green; // todo changer
+//$warning:
+//$danger:
+//$light:
+//$dark:
+
+// Variables de base originale (pour ref)
+//$primary:       $blue !default;
+//$secondary:     $gray-600 !default;
+//$success:       $green !default;
+//$info:          $cyan !default;
+//$warning:       $yellow !default;
+//$danger:        $red !default;
+//$light:         $gray-100 !default;
+//$dark:          $gray-900 !default;
+
+
+// puis npm run build

@@ -36,6 +36,7 @@
         "symfony/validator": "5.2.*",
         "symfony/var-dumper": "5.2.*",
         "symfony/web-profiler-bundle": "5.2.*",
+        "symfony/webpack-encore-bundle": "^1.12",
         "symfony/yaml": "5.2.*",
         "twig/extra-bundle": "^2.12|^3.0",
         "twig/intl-extra": "^3.3",
@@ -69,8 +70,6 @@
             "assets:install %PUBLIC_DIR%": "symfony-cmd"
         },
         "database-setup": [
-            "php bin/console doctrine:database:drop --force",
-            "php bin/console doctrine:database:create",
             "php bin/console doctrine:migrations:migrate --no-interaction",
             "php bin/console doctrine:fixtures:load --no-interaction"
         ],
