@@ -2,12 +2,15 @@
 
 namespace App\Controller;
 
+use App\Entity\Images;
 use App\Entity\Product;
 use App\Form\ProductType;
 use App\Repository\CategoryRepository;
+use App\Repository\ImagesRepository;
 use App\Repository\ProductRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -72,6 +75,20 @@ class ProductController extends AbstractController
 		if ($form->isSubmitted() && $form->isValid()) {
 			$product->setSlug(strtolower($slugger->slug($product->getName())));
 
+			// Uploads management
+			$images = $form->get('uploads')->getData();
+			foreach ($images as $image) {
+				$fichier = md5(uniqid()).'.'.$image->guessExtension();
+				$image->move(
+					$this->getParameter('images_directory'),
+					$fichier
+				);
+
+				$img = new Images();
+				$img->setName($fichier);
+				$product->addImage($img);
+			}
+
 			$em->flush();
 
 			return $this->redirectToRoute('product_show', [
@@ -84,6 +101,7 @@ class ProductController extends AbstractController
 
 		return $this->render('product/edit.html.twig', [
 			'product' => $product,
+//			'uploads' => $images,
 			'formView' => $formView
 		]);
     }
@@ -92,8 +110,7 @@ class ProductController extends AbstractController
 	/**
 	 * @Route("/admin/produit/ajouter", name="product_create")
 	*/
-	public function create(
-		Request $request, SluggerInterface $slugger, EntityManagerInterface $em) {
+	public function create(Request $request, SluggerInterface $slugger, EntityManagerInterface $em) {
 
 		$product = new Product();
 		$form = $this->createForm(ProductType::class, $product);
@@ -102,6 +119,25 @@ class ProductController extends AbstractController
 		if ($form->isSubmitted() && $form->isValid()) {
 			$product->setSlug(strtolower($slugger->slug($product->getName())));
 
+			// On récupère les images
+			$images = $form->get('uploads')->getData();
+
+			// On boucle sur les images
+			foreach ($images as $image) {
+				// On génère un nom de fichier
+				$fichier = md5(uniqid()).'.'.$image->guessExtension();
+				// On copie le fichier dans le dossier uploads
+				$image->move(
+					$this->getParameter('images_directory'),
+					$fichier
+				);
+				// On stocke l'img dans la bdd (son nom)
+				$img = new Images();
+				$img->setName($fichier);
+				$product->addImage($img);
+			}
+
+			// On ne persiste pas $images car on a Cascade "persist" dns $images de Product()
 			$em->persist($product);
 			$em->flush();
 
@@ -117,5 +153,31 @@ class ProductController extends AbstractController
 		return $this->render('product/create.html.twig', [
 			'formView' => $formView
 		]);
+    }
+
+	/**
+	 * @Route("/admin/image/{id}/supprimer", name="product_image_delete", methods={"DELETE"})
+	 */
+	public function deleteImage(Request $request, ImagesRepository $image, EntityManagerInterface $em) {
+		$data = json_decode($request->getContent(), true);
+
+		// On vérifie si le token est valide
+		if ($this->isCsrfTokenValid('delete'.$image->getId(), $data['_token'])) {
+			// On récup le nom de l'image
+			$nom = $image->getName();
+			// On supprime le fichier
+			unlink($this->getParameter('images_directory').'/'.$nom);
+
+			// On supprime l'entrée de la bdd
+			$em->remove($image);
+			$em->flush();
+
+			// On répond en Json
+			return new JsonResponse(['success' => 1]);
+		} else {
+			return new JsonResponse(['error' => 'Token invalide'], 400);
+		}
+
+		
     }
 }

@@ -64,9 +64,15 @@ class Product
      */
     private $purchaseItems;
 
+    /**
+     * @ORM\OneToMany(targetEntity=Images::class, mappedBy="product", orphanRemoval=true, cascade={"persist", "remove"})
+     */
+    private $images;
+
     public function __construct()
     {
         $this->purchaseItems = new ArrayCollection();
+        $this->images = new ArrayCollection();
     }
 
 
@@ -171,6 +177,36 @@ class Product
             // set the owning side to null (unless already changed)
             if ($purchaseItem->getProduct() === $this) {
                 $purchaseItem->setProduct(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Images[]
+     */
+    public function getImages(): Collection
+    {
+        return $this->images;
+    }
+
+    public function addImage(Images $image): self
+    {
+        if (!$this->images->contains($image)) {
+            $this->images[] = $image;
+            $image->setProduct($this);
+        }
+
+        return $this;
+    }
+
+    public function removeImage(Images $image): self
+    {
+        if ($this->images->removeElement($image)) {
+            // set the owning side to null (unless already changed)
+            if ($image->getProduct() === $this) {
+                $image->setProduct(null);
             }
         }
 
