@@ -155,10 +155,21 @@ class ProductController extends AbstractController
 		]);
     }
 
+//	/**
+//	 * @Route("/admin/produit/{id}/supprimer", name="product_delete")
+//	 */
+//	public function delete(Request $request, Product $product, EntityManagerInterface $em): Response {
+//		if ($this->isCsrfTokenValid('delete'.$product->getId(), $request->request->get('_token'))) {
+//			$em->remove($product);
+//			$em->flush();
+//		}
+//		return $this->redirectToRoute('homepage');
+//    }
+
 	/**
 	 * @Route("/admin/image/{id}/supprimer", name="product_image_delete", methods={"DELETE"})
 	 */
-	public function deleteImage(Request $request, ImagesRepository $image, EntityManagerInterface $em) {
+	public function removeImage(Request $request, Images $image, EntityManagerInterface $em) {
 		$data = json_decode($request->getContent(), true);
 
 		// On vérifie si le token est valide
@@ -177,7 +188,5 @@ class ProductController extends AbstractController
 		} else {
 			return new JsonResponse(['error' => 'Token invalide'], 400);
 		}
-
-		
     }
 }

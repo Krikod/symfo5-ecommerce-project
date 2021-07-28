@@ -24,9 +24,24 @@
             {{ form_row(formView.uploads) }}
         </div>
     </div>
+    {# Si la route est /admin/produit/{id}/editer, on ajoute les images => simple sécurité #}
+    {% if app.request.attributes.get('_route') == 'product_edit' %}
+        <h2>Images</h2>
+        {% for image in product.images %}
+            <div>
+                <img src="{{ asset('/uploads/'~ image.name) }}" alt="Image" width="150">
+                <a href="{{ path('product_image_delete', {id: image.id}) }}"
+                   data-delete data-token="{{ csrf_token('delete' ~ image.id) }}"
+                >Supprimer l'image</a>
+            </div>
+        {% endfor %}
+    {% endif %}
     <button type="submit" class="btn btn-primary"><i class="fas fa-save fa-lg"></i>
         Editer le produit
     </button>
     {{ form_end(formView) }}
+{% endblock %}
 
+{% block javascripts %}
+    <script src="{{ asset('js/images.js') }}"></script>
 {% endblock %}
