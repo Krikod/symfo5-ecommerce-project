@@ -155,6 +155,7 @@ class ProductController extends AbstractController
 		]);
     }
 
+    //A REVOIR
 //	/**
 //	 * @Route("/admin/produit/{id}/supprimer", name="product_delete")
 //	 */
