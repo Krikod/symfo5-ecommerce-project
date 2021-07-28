@@ -169,7 +169,7 @@ class ProductController extends AbstractController
 	/**
 	 * @Route("/admin/image/{id}/supprimer", name="product_image_delete", methods={"DELETE"})
 	 */
-	public function removeImage(Request $request, Images $image, EntityManagerInterface $em) {
+	public function deleteImage(Request $request, Images $image, EntityManagerInterface $em) {
 		$data = json_decode($request->getContent(), true);
 
 		// On vérifie si le token est valide
