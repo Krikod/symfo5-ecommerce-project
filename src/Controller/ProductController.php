@@ -19,6 +19,13 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 class ProductController extends AbstractController
 {
 	/**
+	 * ProductController constructor.
+	 */
+	public function __construct(ProductRepository $repo) {
+		$this->repo = $repo;
+	}
+
+	/**
 	 * @Route("/{slug}", name="product_category", priority=-1)
 	 *
 	 * @param $slug
@@ -155,7 +162,6 @@ class ProductController extends AbstractController
 		]);
     }
 
-    //A REVOIR
 //	/**
 //	 * @Route("/admin/produit/{id}/supprimer", name="product_delete")
 //	 */
@@ -166,6 +172,23 @@ class ProductController extends AbstractController
 //		}
 //		return $this->redirectToRoute('homepage');
 //    }
+
+	/**
+	 * @Route("/admin/produit/{id}/supprimer", name="product_delete")
+	 */
+	public function delete(int $id, Product $product, EntityManagerInterface $em) {
+
+		if (!$this->repo->find($id)) {
+			throw $this->createNotFoundException("Le produit $id n'existe pas et ne peut être supprimé");
+		}
+
+		$em->remove($product);
+		$em->flush();
+
+		$this->addFlash( 'success', 'Produit supprimé !');
+
+		return $this->redirectToRoute('homepage');
+	}
 
 	/**
 	 * @Route("/admin/image/{id}/supprimer", name="product_image_delete", methods={"DELETE"})

@@ -23,7 +23,7 @@ class PurchaseItem
     private $product;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Purchase::class, inversedBy="purchaseItems")
+     * @ORM\ManyToOne(targetEntity=Purchase::class, inversedBy="purchaseItems", cascade={"remove"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $purchase;

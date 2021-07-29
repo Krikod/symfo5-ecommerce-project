@@ -60,7 +60,7 @@ class Product
     private $category;
 
     /**
-     * @ORM\OneToMany(targetEntity=PurchaseItem::class, mappedBy="product")
+     * @ORM\OneToMany(targetEntity=PurchaseItem::class, mappedBy="product", cascade={"remove"})
      */
     private $purchaseItems;
 

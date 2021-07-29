@@ -8,7 +8,12 @@
         <a href="{{ path('product_show', {
             'category_slug': p.category.slug,
             'slug': p.slug
-        }) }}" class="btn btn-secondary btn-sm">Détails</a>
-        <a href="{{ path('cart_add', {'id': p.id}) }}" class="btn btn-success btn-sm">Ajouter</a>
+        }) }}" class="btn btn-outline-secondary btn-sm">Détails</a>
+        <a href="{{ path('cart_add', {'id': p.id}) }}" class="btn btn-success btn-sm">Ajouter au panier</a>
+
+        {% if is_granted('ROLE_ADMIN') %}
+            <a class="btn btn-warning btn-sm" href="{{ path('product_edit', {'id': p.id}) }}">Editer ce produit</a>
+            <a class="btn btn-outline-danger btn-sm" href="{{ path('product_delete', {'id': p.id}) }}">Supprimer</a>
+        {% endif %}
     </div>
 </div>
