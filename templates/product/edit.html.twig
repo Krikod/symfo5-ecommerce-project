@@ -14,14 +14,16 @@
 
     <div class="row">
         <div class="col">
-            {{ form_row(formView.name) }}
-            {{ form_row(formView.category) }}
-            {{ form_row(formView.price) }}
-        </div>
-        <div class="col">
-            {{ form_row(formView.shortDescription) }}
             {{ form_row(formView.mainPicture) }}
             {{ form_row(formView.uploads) }}
+
+        </div>
+        <div class="col">
+            {{ form_row(formView.name) }}
+            {{ form_row(formView.category) }}
+            {{ form_row(formView.shortDescription) }}
+            {{ form_row(formView.price) }}
+
         </div>
     </div>
     {# Si la route est /admin/produit/{id}/editer, on ajoute les images => simple sécurité #}
@@ -29,7 +31,8 @@
         <h2>Images</h2>
         {% for image in product.images %}
             <div>
-                <img src="{{ asset('/uploads/'~ image.name) }}" alt="Image" width="150">
+                {#// todo image de#}
+                <img src="{{ asset('uploads/product_image/'~ image.name) }}" alt="Image de {{ product.name }}" width="150">
                 <a href="{{ path('product_image_delete', {id: image.id}) }}"
                    data-delete data-token="{{ csrf_token('delete' ~ image.id) }}"
                 >Supprimer l'image</a>

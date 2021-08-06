@@ -8,8 +8,10 @@ use App\Form\ProductType;
 use App\Repository\CategoryRepository;
 use App\Repository\ImagesRepository;
 use App\Repository\ProductRepository;
+use App\Service\UploaderHelper;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -73,7 +75,8 @@ class ProductController extends AbstractController
 	/**
 	 * @Route("/admin/produit/{id}/editer", name="product_edit")
 	 */
-	public function edit($id, Request $request, ProductRepository $repo, EntityManagerInterface $em, SluggerInterface $slugger) {
+	public function edit($id, Request $request, ProductRepository $repo,
+		EntityManagerInterface $em, SluggerInterface $slugger, UploaderHelper $uploaderHelper) {
 		// todo voir problème slug qui change -> rediriger avec l'id et non le slug
 		$product = $repo->find($id);
 		$form = $this->createForm(ProductType::class, $product);
@@ -83,20 +86,20 @@ class ProductController extends AbstractController
 			$product->setSlug(strtolower($slugger->slug($product->getName())));
 
 			// Uploads management
-			$images = $form->get('uploads')->getData();
-			foreach ($images as $image) {
-				$fichier = md5(uniqid()).'.'.$image->guessExtension();
-				$image->move(
-					$this->getParameter('images_directory'),
-					$fichier
-				);
+			/** @var UploadedFile $uploadedFiles */
+			$uploadedFiles = $form->get('uploads')->getData();
+
+			foreach ($uploadedFiles as $uploadedFile) {
+				$newFilename = $uploaderHelper->uploadProductImage($uploadedFile);
 
 				$img = new Images();
-				$img->setName($fichier);
+				$img->setName($newFilename);
 				$product->addImage($img);
 			}
 
 			$em->flush();
+
+			$this->addFlash('success', 'Produit édité avec succès !');
 
 			return $this->redirectToRoute('product_show', [
 				'category_slug' => $product->getCategory()->getSlug(),
@@ -108,7 +111,6 @@ class ProductController extends AbstractController
 
 		return $this->render('product/edit.html.twig', [
 			'product' => $product,
-//			'uploads' => $images,
 			'formView' => $formView
 		]);
     }
@@ -117,7 +119,7 @@ class ProductController extends AbstractController
 	/**
 	 * @Route("/admin/produit/ajouter", name="product_create")
 	*/
-	public function create(Request $request, SluggerInterface $slugger, EntityManagerInterface $em) {
+	public function create(Request $request, SluggerInterface $slugger, EntityManagerInterface $em, UploaderHelper $uploaderHelper) {
 
 		$product = new Product();
 		$form = $this->createForm(ProductType::class, $product);
@@ -126,27 +128,41 @@ class ProductController extends AbstractController
 		if ($form->isSubmitted() && $form->isValid()) {
 			$product->setSlug(strtolower($slugger->slug($product->getName())));
 
-			// On récupère les images
-			$images = $form->get('uploads')->getData();
+			/** @var UploadedFile $uploadedFiles */
+			$uploadedFiles = $form->get('uploads')->getData();
 
-			// On boucle sur les images
-			foreach ($images as $image) {
-				// On génère un nom de fichier
-				$fichier = md5(uniqid()).'.'.$image->guessExtension();
-				// On copie le fichier dans le dossier uploads
-				$image->move(
-					$this->getParameter('images_directory'),
-					$fichier
-				);
-				// On stocke l'img dans la bdd (son nom)
+			foreach ($uploadedFiles as $uploadedFile) {
+				$newFilename = $uploaderHelper->uploadProductImage($uploadedFile);
+
 				$img = new Images();
-				$img->setName($fichier);
+				$img->setName($newFilename);
 				$product->addImage($img);
 			}
+
+
+
+			// On récupère les images
+//			$images = $form->get('uploads')->getData();
+//
+//			// On boucle sur les images
+//			foreach ($images as $image) {
+//				// On génère un nom de fichier
+//				$fichier = md5(uniqid()).'.'.$image->guessExtension();
+//				// On copie le fichier dans le dossier uploads
+//				$image->move(
+//					$this->getParameter('images_directory'),
+//					$fichier
+//				);
+				// On stocke l'img dans la bdd (son nom)
+//				$img = new Images();
+//				$img->setName($fichier);
+//				$product->addImage($img);
+//			}
 
 			// On ne persiste pas $images car on a Cascade "persist" dns $images de Product()
 			$em->persist($product);
 			$em->flush();
+
 
 			return $this->redirectToRoute('product_show', [
 				'category_slug' => $product->getCategory()->getSlug(),

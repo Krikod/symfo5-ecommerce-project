@@ -14,9 +14,13 @@
     <h1>{{ product.name }} ({{ product.price|amount }})</h1>
 
     <div class="row">
+
+        {#Une photo#}
         <div class="col-4">
             <img src="{{ product.mainPicture }}" alt="Image de {{ product.name }}" class="img-fluid">
         </div>
+
+
         <div class="col">
             <span class="badge badge-secondary">
                 {{ product.category.name }}
@@ -36,6 +40,15 @@
                     Supprimer</a>
             {% endif %}
         </div>
+    </div>
+    {# Upload multiple #}
+    <div class="col-4">
+        {% for image in product.images %}
+            <div>
+                <img src="{{ asset('/uploads/product_image/'~ image.name) }}" width="400" alt="Image de {{ product.name }}"
+                     class="img-fluid">
+            </div>
+        {% endfor %}
     </div>
 
 {% endblock %}

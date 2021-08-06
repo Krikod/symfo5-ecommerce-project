@@ -13,6 +13,9 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\All;
+use Symfony\Component\Validator\Constraints\Image;
+use Symfony\Component\Validator\Constraints\NotNull;
 
 class ProductType extends AbstractType
 {
@@ -49,14 +52,35 @@ class ProductType extends AbstractType
 		        'choice_label' => function(Category $category) {
 			        return strtoupper($category->getName());
 		        }
-	        ])
+	        ]);
+
+	    $imageConstraints = [
+		    new All([
+			    new Image([
+				    // todo réduire poids - et vérif constraints
+				    'maxSize' => '1M'
+			    ])
+		    ])];
+// todo rendre 1 image obligatoire / Validation !
+//	    /** @var Product $product */
+//	    if (!$product->getImageFilename()) {
+//		    $imageConstraints[] = new NotNull([
+//			    'message' => 'Please upload an image',
+//		    ]);
+//	    }
+
+        $builder
         ->add( 'uploads', FileType::class, [
         	'label' => 'Images du produit',
 	        'multiple' => true,
 	        'mapped' => false,
-	        'required' => false
+	        'required' => false,
+	        'constraints' => $imageConstraints,
+	        'attr' => [
+	        	'accept' => '.jpg, .jpeg, .png'
+	        ]
         ]);
-        ;
+
     }
 
     public function configureOptions(OptionsResolver $resolver)
