@@ -12,8 +12,8 @@
         <a href="{{ path('cart_add', {'id': p.id}) }}" class="btn btn-success btn-sm">Ajouter au panier</a>
 
         {% if is_granted('ROLE_ADMIN') %}
-            <a class="btn btn-warning btn-sm" href="{{ path('product_edit', {'id': p.id}) }}">Editer ce produit</a>
-            <a class="btn btn-outline-danger btn-sm" href="{{ path('product_delete', {'id': p.id}) }}">Supprimer</a>
+            <a class="btn btn-warning btn-sm" href="{{ path('product_edit', {'id': p.id}) }}">Editer</a>
+            <a class="btn btn-danger fas fa-trash btn-sm" href="{{ path('product_delete', {'id': p.id}) }}"></a>
         {% endif %}
     </div>
 </div>

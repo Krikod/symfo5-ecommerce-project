@@ -6,11 +6,16 @@
 {% block body %}
 
 {% if is_granted('ROLE_ADMIN') %}
-    <a class="btn btn-outline-info btn-sm" href="{{ path('product_create') }}">Ajouter un produit</a>
-    <a class="btn btn-outline-info btn-sm" href="{{ path('category_create') }}">Ajouter une catégorie</a>
-{% endif %}
+    <h1>ADMINISTRATION DU SITE</h1>
+    <h2>Les catégories - <a class="btn btn-outline-info btn-sm" href="{{ path('category_create') }}">Ajouter une catégorie</a>
+         -     <a class="btn btn-outline-info btn-sm" href="{{ path('categories') }}">Editer</a>
 
-   <h1>Nos produits phares</h1>
+    </h2>
+    <h2>Les produits - <a class="btn btn-outline-info btn-sm" href="{{ path('product_create') }}">Ajouter un produit</a>
+    </h2>
+{% else %}
+    <h1>Nos produits phares</h1>
+{% endif %}
 
     <div class="row">
         {% for p in products %}

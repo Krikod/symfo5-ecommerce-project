@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Catégories{% endblock %}
+
+{% block body %}
+
+    <h1>Edition des catégories</h1>
+    <hr>
+    <h2><a class="btn btn-outline-info btn-sm" href="{{ path('category_create') }}">Ajouter une catégorie</a></h2>
+
+    <h2>Toutes les catégories</h2>
+    {#<div class="row">#}
+        {#<div class="col-sm">#}
+            {#{% for c in categories %}#}
+                {#<p>{{ c.name }} <a class="btn btn-outline-info btn-sm" href="{{ path('category_edit', {'id': c.id }) }}">Editer</a>#}
+                    {#<a class="btn btn-danger fas fa-trash btn-sm" href="{{ path('category_delete', {'id': c.id}) }}"></a>#}
+                {#</p>#}
+            {#{% endfor %}#}
+        {#</div>#}
+    {#</div>#}
+
+    {% if categories | length > 0 %}
+
+        <table class="table table-hover">
+            <thead></thead>
+            <tbody>
+                {% for c in categories %}
+                    <tr>
+                        <td>{{ c.name }} </td>
+                        <td>
+                            <a class="btn btn-outline-info btn-sm" href="{{ path('category_edit', {'id': c.id }) }}">Editer</a>
+                            <a class="btn btn-danger fas fa-trash btn-sm" href="{{ path('category_delete', {'id': c.id }) }}"></a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        {% else %}
+            <p>Aucune catégorie n'est enregistrée.</p>
+    {% endif %}
+{% endblock %}

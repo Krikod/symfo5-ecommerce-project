@@ -13,6 +13,12 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
 class CategoryController extends AbstractController {
+	/**
+	 * CategoryController constructor.
+	 */
+	public function __construct(CategoryRepository $repo) {
+		$this->repo = $repo;
+	}
 
 	/**
 	 * @Route("/admin/categorie/ajouter", name="category_create")
@@ -29,7 +35,9 @@ class CategoryController extends AbstractController {
 			$em->persist($category);
 			$em->flush();
 
-			return $this->redirectToRoute('homepage');
+			$this->addFlash( 'success', 'Catégorie créée !');
+
+			return $this->redirectToRoute('categories');
 		}
 
 		$formView = $form->createView();
@@ -50,8 +58,9 @@ class CategoryController extends AbstractController {
 
 		if ($form->isSubmitted()) {
 			$em->flush();
+			$this->addFlash( 'success', 'Catégorie éditée !');
 
-			return $this->redirectToRoute('homepage');
+			return $this->redirectToRoute('categories');
 		}
 
 		$formView = $form->createView();
@@ -60,5 +69,33 @@ class CategoryController extends AbstractController {
 			'category' => $category,
 			'formView' => $formView
 		]);
+	}
+
+	/**
+	 * @Route("admin/categories", name="categories"))
+	 */
+	public function list(EntityManagerInterface $em, CategoryRepository $repo) : Response {
+		// Récupérer les catégories
+		$categories = $repo->findAll();
+
+
+		return $this->render('category/list.html.twig', [
+			'categories' => $categories,
+
+		]);
+	}
+	/**
+	 * @Route("/admin/category/{id}/supprimer", name="category_delete")
+	 */
+	public function delete(int $id, Category $category, EntityManagerInterface $em) {
+		if (!$this->repo->find($id)) {
+			throw $this->createNotFoundException("La catégorie $id n'existe pas et ne peut pas être supprimée");
+		}
+		$em->remove($category);
+		$em->flush();
+		$this->addFlash( 'success', 'Catégorie supprimée !');
+// TODO Mettre category 0 à produit sur Preremove ??
+
+		return $this->redirectToRoute('categories');
 	}
 }

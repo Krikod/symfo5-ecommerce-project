@@ -29,15 +29,15 @@
                 {{ product.shortDescription }}
             </p>
             <a href="{{ path('cart_add', {'id': product.id}) }}" class="btn btn-outline-success">
-                <i class="btn btn-secondary"></i>
+                {#<i class="btn btn-secondary"></i>#}
                 Ajouter au panier
             </a>
             {% if is_granted('ROLE_ADMIN') %}
                 <a class="btn btn-warning" href="{{ path('product_edit', {'id': product.id}) }}">Editer ce produit</a>
-                <a class="btn btn-outline-danger" href="{{ path('product_delete', {'id': product.id}) }}">
+                <a class="btn btn-danger fas fa-trash" href="{{ path('product_delete', {'id': product.id}) }}">
                     {#todo icons !!!#}
                     {#<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>#}
-                    Supprimer</a>
+                   </a>
             {% endif %}
         </div>
     </div>

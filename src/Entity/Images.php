@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ImagesRepository;
+use App\Service\UploaderHelper;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -36,6 +37,8 @@ class Images
     public function getName(): ?string
     {
         return $this->name;
+//	    return 'uploads/'.UploaderHelper::PRODUCT_IMAGE.'/'.$this->getName();
+
     }
 
     public function setName(string $name): self

@@ -18,7 +18,7 @@ Encore
      * ENTRY CONFIG
      *
      * Each entry will result in one JavaScript file (e.g. app.js)
-     * and one CSS file (e.g. app.scss) if your JavaScript imports CSS.
+     * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
      */
     .addEntry('app', './assets/app.js')
 
@@ -56,7 +56,7 @@ Encore
     })
 
     // enables Sass/SCSS support
-    .enableSassLoader()
+    //.enableSassLoader()
 
     // uncomment if you use TypeScript
     //.enableTypeScriptLoader()
@@ -70,11 +70,6 @@ Encore
 
     // uncomment if you're having problems with a jQuery plugin
     //.autoProvidejQuery()
-
-// Enable postCSS : https://symfony.com/doc/current/frontend/encore/postcss.html
-     .enablePostCssLoader()
-// todo if problem: Webpack Encore requires version ^4.0.0 || ^5.0.0 of postcss-loader. Your version 6.1.1 is too new. The related feature *may* still work properly. If you have issues, try downgrading the library, or upgrading Encore.
-
 ;
 
 module.exports = Encore.getWebpackConfig();

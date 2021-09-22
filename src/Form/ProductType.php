@@ -77,7 +77,8 @@ class ProductType extends AbstractType
 	        'required' => false,
 	        'constraints' => $imageConstraints,
 	        'attr' => [
-	        	'accept' => '.jpg, .jpeg, .png'
+	        	'accept' => '.jpg, .jpeg, .png',
+//		        'placeholder' => 'Sélectionnez une image'
 	        ]
         ]);
 

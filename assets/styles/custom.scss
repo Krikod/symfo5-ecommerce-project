@@ -10,11 +10,21 @@
 //$primary:
 //$secondary:
 //$success:
-//$info: green; // todo changer
+//$info: red; // todo changer
 //$warning:
 //$danger:
 //$light:
 //$dark:
+
+// File uploads
+//#product_uploads::before {
+//  content: "Sélectionnez une image hop";
+//  position: absolute;
+//  z-index: 2;
+//  display: block;
+//  background-color: #eee;
+//  width: 80px;
+//}
 
 // Variables de base originale (pour ref)
 //$primary:       $blue !default;

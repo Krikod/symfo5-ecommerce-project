@@ -8,6 +8,8 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
 class UploaderHelper {
+
+	const PRODUCT_IMAGE = 'images_directory';
 	/**
 	 * @var string
 	 */
@@ -21,7 +23,8 @@ class UploaderHelper {
 
 
 	public function uploadProductImage(UploadedFile $uploadedFile): string {
-		$fileDestination = $this->uploadsPath.'/product_image';
+//		$fileDestination = $this->uploadsPath.'/product_image';
+		$fileDestination = $this->uploadsPath.'/'.self::PRODUCT_IMAGE;
 
 		$originalFilename = pathinfo($uploadedFile->getClientOriginalName(), PATHINFO_FILENAME);
 		$safeFileName = $this->slugger->slug($originalFilename);
