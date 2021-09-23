@@ -26,7 +26,11 @@
             <tbody>
                 {% for c in categories %}
                     <tr>
-                        <td>{{ c.name }} </td>
+                        {% if c.products.count() == 0 %}
+                            <td style="color: #B0413E">{{ c.name }} ({{ c.products.count() }})</td>
+                        {% else %}
+                            <td class="text-bold">{{ c.name }} ({{ c.products.count() }})</td>
+                        {% endif %}
                         <td>
                             <a class="btn btn-outline-info btn-sm" href="{{ path('category_edit', {'id': c.id }) }}">Editer</a>
                             <a class="btn btn-danger fas fa-trash btn-sm" href="{{ path('category_delete', {'id': c.id }) }}"></a>

@@ -6,11 +6,23 @@
 
     <div class="collapse navbar-collapse" id="navbarColor03">
         <ul class="navbar-nav mr-auto">
+
+            {#{% for c in categoryRepository %}#}
+                {#<li class="nav-item">#}
+                    {#<a class="nav-link" href="{{ path('product_category', {'slug': c.slug}) }}">{{ c.name }}</a>#}
+                {#</li>#}
+            {#{% endfor %}#}
+
             {% for c in categoryRepository.findAll() %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ path('product_category', {'slug': c.slug}) }}">{{ c.name }}</a>
-                </li>
+ {#Todo exclure Autre = or c.slug is same as 'Autre'#}
+                {% if c.products.count() > 0 %}
+                     {#TODO ou faire un service CategoryUtils #}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('product_category', {'slug': c.slug}) }}">{{ c.name }}</a>
+                    </li>
+                {% endif %}
             {% endfor %}
+
         </ul>
         <ul class="navbar-nav">
             <li class="nav-item">

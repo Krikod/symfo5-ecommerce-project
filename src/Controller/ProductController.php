@@ -45,8 +45,11 @@ class ProductController extends AbstractController
     		throw $this->createNotFoundException("La catégorie demandée n'existe pas.");
 	    }
 
+	    $nb_products = $category->getProducts()->count();
+
         return $this->render('product/category.html.twig', [
             'category' => $category,
+	        'nb_products' => $nb_products
         ]);
     }
 

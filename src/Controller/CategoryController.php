@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Category;
+use App\Entity\Product;
 use App\Form\CategoryType;
 use App\Repository\CategoryRepository;
 use Doctrine\ORM\EntityManagerInterface;
@@ -13,9 +14,9 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
 class CategoryController extends AbstractController {
-	/**
-	 * CategoryController constructor.
-	 */
+
+	protected  $repo;
+
 	public function __construct(CategoryRepository $repo) {
 		$this->repo = $repo;
 	}
@@ -26,6 +27,7 @@ class CategoryController extends AbstractController {
 	public function create (EntityManagerInterface $em, SluggerInterface $slugger, Request $request) : Response {
 
 		$category = new Category();
+		// TODO verif nom cat n'existe pas
 
 		$form = $this->createForm(CategoryType::class, $category);
 		$form->handleRequest($request);
@@ -50,9 +52,10 @@ class CategoryController extends AbstractController {
 	/**
 	 * @Route("/admin/categorie/{id}/editer", name="category_edit")
 	 */
-	public function edit($id, EntityManagerInterface $em, Request $request, CategoryRepository $repo) : Response {
+	public function edit($id, CategoryRepository $repo, EntityManagerInterface $em, Request $request) : Response {
 		$category = $repo->find($id);
 
+		// TODO verif nom cat n'existe pas
 		$form = $this->createForm(CategoryType::class, $category);
 		$form->handleRequest($request);
 
@@ -74,27 +77,59 @@ class CategoryController extends AbstractController {
 	/**
 	 * @Route("admin/categories", name="categories"))
 	 */
-	public function list(EntityManagerInterface $em, CategoryRepository $repo) : Response {
+	public function list(CategoryRepository $repo, EntityManagerInterface $em) : Response {
 		// Récupérer les catégories
 		$categories = $repo->findAll();
 
 
 		return $this->render('category/list.html.twig', [
 			'categories' => $categories,
-
 		]);
 	}
+
 	/**
-	 * @Route("/admin/category/{id}/supprimer", name="category_delete")
+	 * @Route("/admin/categorie/{id}/supprimer", name="category_delete", requirements={"id": "\d+"})
 	 */
-	public function delete(int $id, Category $category, EntityManagerInterface $em) {
-		if (!$this->repo->find($id)) {
+	public function delete(int $id, CategoryRepository $repo, Category $category, SluggerInterface $slugger, EntityManagerInterface $em) {
+
+		$category_other = $repo->findOneBy(array('name'=> 'Autre'));
+// Todo éventuellement demander confirmation pour suppression de catégorie
+//		$nb_products = $category->getProducts()->count();
+
+//		$syntax;
+//		$singular = 'produit est attaché';
+//		$plural = 'produits sont attachés';
+
+//		if ($nb_products > 1) {
+//			$syntax = $plural;
+//		} elseif ($nb_products === 1) {
+//			$syntax = $singular;
+//		}
+
+		$category = $repo->find($id);
+
+		if (!$category) {
 			throw $this->createNotFoundException("La catégorie $id n'existe pas et ne peut pas être supprimée");
 		}
+//		elseif ($nb_products) {
+//			$this->addFlash("warning", "Attention, $nb_products $syntax à cette catégorie !");
+//		}
+
+		if (!$category_other) {
+			$category_other = new Category();
+			$category_other->setName('Autre');
+			$category_other->setSlug(strtolower($slugger->slug($category_other->getName())));
+			$em->persist($category_other);
+		}
+
+		foreach ($category->getProducts() as $product) {
+			$category->removeProduct($product);
+			$product->setCategory($category_other);
+		}
+
 		$em->remove($category);
 		$em->flush();
 		$this->addFlash( 'success', 'Catégorie supprimée !');
-// TODO Mettre category 0 à produit sur Preremove ??
 
 		return $this->redirectToRoute('categories');
 	}
