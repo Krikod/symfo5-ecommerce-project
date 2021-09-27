@@ -88,17 +88,36 @@ class ProductController extends AbstractController
 		if ($form->isSubmitted() && $form->isValid()) {
 			$product->setSlug(strtolower($slugger->slug($product->getName())));
 
-			// Uploads management
-			/** @var UploadedFile $uploadedFiles */
-			$uploadedFiles = $form->get('uploads')->getData();
+//			On récupère les images
+			/** @var Images $images */
+			$images = $form->get('uploads')->getData();
 
-			foreach ($uploadedFiles as $uploadedFile) {
-				$newFilename = $uploaderHelper->uploadProductImage($uploadedFile);
-
+			// On boucle sur les images
+			foreach ($images as $image) {
+				// On génère un nom de fichier
+				$fichier = md5(uniqid()).'.'.$image->guessExtension();
+				// On copie le fichier dans le dossier uploads
+				$image->move(
+					$this->getParameter('images_directory'),
+					$fichier
+				);
+//				 On stocke l'img dans la bdd (son nom)
 				$img = new Images();
-				$img->setName($newFilename);
+				$img->setName($fichier);
 				$product->addImage($img);
 			}
+
+//			// Uploads management
+//			/** @var UploadedFile $uploadedFiles */
+//			$uploadedFiles = $form->get('uploads')->getData();
+//
+//			foreach ($uploadedFiles as $uploadedFile) {
+//				$newFilename = $uploaderHelper->uploadProductImage($uploadedFile);
+//
+//				$img = new Images();
+//				$img->setName($newFilename);
+//				$product->addImage($img);
+//			}
 
 			$em->flush();
 
@@ -131,36 +150,38 @@ class ProductController extends AbstractController
 		if ($form->isSubmitted() && $form->isValid()) {
 			$product->setSlug(strtolower($slugger->slug($product->getName())));
 
-			/** @var UploadedFile $uploadedFiles */
-			$uploadedFiles = $form->get('uploads')->getData();
-
-			foreach ($uploadedFiles as $uploadedFile) {
-				$newFilename = $uploaderHelper->uploadProductImage($uploadedFile);
-
-				$img = new Images();
-				$img->setName($newFilename);
-				$product->addImage($img);
-			}
-
-
-
-			// On récupère les images
-//			$images = $form->get('uploads')->getData();
+////			On récupère les images transmises
+//			/** @var UploadedFile $uploadedFiles */
+//			$uploadedFiles = $form->get('uploads')->getData();
 //
-//			// On boucle sur les images
-//			foreach ($images as $image) {
-//				// On génère un nom de fichier
-//				$fichier = md5(uniqid()).'.'.$image->guessExtension();
-//				// On copie le fichier dans le dossier uploads
-//				$image->move(
-//					$this->getParameter('images_directory'),
-//					$fichier
-//				);
-				// On stocke l'img dans la bdd (son nom)
+//			foreach ($uploadedFiles as $uploadedFile) {
+//				$newFilename = $uploaderHelper->uploadProductImage($uploadedFile);
+//
 //				$img = new Images();
-//				$img->setName($fichier);
+//				$img->setName($newFilename);
 //				$product->addImage($img);
 //			}
+
+
+
+//			 On récupère les images
+			/** @var Images $images */
+			$images = $form->get('uploads')->getData();
+
+			// On boucle sur les images
+			foreach ($images as $image) {
+				// On génère un nom de fichier
+				$fichier = md5(uniqid()).'.'.$image->guessExtension();
+				// On copie le fichier dans le dossier uploads
+				$image->move(
+					$this->getParameter('images_directory'),
+					$fichier
+				);
+//				 On stocke l'img dans la bdd (son nom)
+				$img = new Images();
+				$img->setName($fichier);
+				$product->addImage($img);
+			}
 
 			// On ne persiste pas $images car on a Cascade "persist" dns $images de Product()
 			$em->persist($product);

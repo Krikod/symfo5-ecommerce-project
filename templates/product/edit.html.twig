@@ -14,35 +14,36 @@
 
     <div class="row">
         <div class="col">
-            {{ form_row(formView.mainPicture) }}
-            {{ form_row(formView.uploads, {
-                attr: {
-                'placeholder': 'Sélectionnez une image'
-                }
-            })  }}
-
-        </div>
-        <div class="col">
             {{ form_row(formView.name) }}
             {{ form_row(formView.category) }}
             {{ form_row(formView.shortDescription) }}
             {{ form_row(formView.price) }}
-
+        </div>
+        <div class="col">
+            {#{{ form_row(formView.mainPicture) }}#}
+            {{ form_row(formView.uploads, {
+                attr: {
+                    'placeholder': 'Sélectionnez une image'
+                }
+            })  }}
         </div>
     </div>
+
     {# Si la route est /admin/produit/{id}/editer, on ajoute les images => simple sécurité #}
     {% if app.request.attributes.get('_route') == 'product_edit' %}
-        <h2>Images</h2>
+        {#// todo visible si images#}
+        <h2>Image(s)</h2>
         {% for image in product.images %}
             <div>
                 {#// todo image de#}
-                <img src="{{ asset('uploads/product_image/'~ image.name) }}" alt="Image de {{ product.name }}" width="150">
-                <a href="{{ path('product_image_delete', {id: image.id}) }}"
+                <img src="{{ asset('uploads/'~ image.name) }}" alt="Image de {{ product.name }}" width="150">
+                <a href="{{ path('product_image_delete', {'id': image.id}) }}"
                    data-delete data-token="{{ csrf_token('delete' ~ image.id) }}"
                 >Supprimer l'image</a>
             </div>
         {% endfor %}
     {% endif %}
+<div class="pt-3 pb-3"></div>
     <button type="submit" class="btn btn-primary"><i class="fas fa-save fa-lg"></i>
         Editer le produit
     </button>

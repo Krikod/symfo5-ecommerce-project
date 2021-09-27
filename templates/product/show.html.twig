@@ -17,7 +17,7 @@
 
         {#Une photo#}
         <div class="col-4">
-            <img src="{{ product.mainPicture }}" alt="Image de {{ product.name }}" class="img-fluid">
+            {#<img src="{{ product.mainPicture }}" alt="Image de {{ product.name }}" class="img-fluid">#}
         </div>
 
 
@@ -45,7 +45,7 @@
     <div class="col-4">
         {% for image in product.images %}
             <div>
-                <img src="{{ asset('/uploads/product_image/'~ image.name) }}" width="400" alt="Image de {{ product.name }}"
+                <img src="{{ asset('/uploads/'~ image.name) }}" width="400" alt="Image de {{ product.name }}"
                      class="img-fluid">
             </div>
         {% endfor %}

@@ -14,9 +14,14 @@
             <link rel="stylesheet" href="https://bootswatch.com/4/lux/bootstrap.min.css">
         {% endblock %}
     </head>
+    {% if is_granted('ROLE_ADMIN') %}
+    <body style="background-color: #f6f5e9">
+    {% else %}
     <body>
+    {% endif %}
     {% include 'shared/_navbar.html.twig' %}
-    <div class="container pt-5 pb-3">
+           <div class="container pt-5 pb-3">
+
         {% for rubrique, messages in app.flashes %}
             <div class="div alert alert-{{ rubrique }}">
                 {% for message in messages %}

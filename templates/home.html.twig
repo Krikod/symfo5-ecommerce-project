@@ -20,6 +20,12 @@
     <div class="row">
         {% for p in products %}
             <div class="col-sm">
+                {% for image in p.images %}
+                    <div>
+                        <img src="{{ asset('/uploads/'~ image.name) }}" width="400" alt="Image de {{ p.name }}"
+                             class="img-fluid">
+                    </div>
+                {% endfor %}
                {% include 'product/_product_card.html.twig' %}
             </div>
         {% endfor %}

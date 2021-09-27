@@ -41,6 +41,7 @@ class ProductType extends AbstractType
 		        ],
 		        'divisor' => 100
 	        ])
+	        // Todo supprimer
 	        ->add('mainPicture', UrlType::class, [
 		        'label' => 'Image du produit',
 		        'attr' => ['placeholder' => 'Tapez l\'URL de l\'image']
@@ -53,12 +54,12 @@ class ProductType extends AbstractType
 			        return strtoupper($category->getName());
 		        }
 	        ]);
-
+// Todo contrainte type, taille, nombre...
 	    $imageConstraints = [
 		    new All([
 			    new Image([
 				    // todo réduire poids - et vérif constraints
-				    'maxSize' => '1M'
+				    'maxSize' => '5M'
 			    ])
 		    ])];
 // todo rendre 1 image obligatoire / Validation !
@@ -71,8 +72,10 @@ class ProductType extends AbstractType
 
         $builder
         ->add( 'uploads', FileType::class, [
-        	'label' => 'Images du produit',
+//        	'label' => 'Image(s) du produit',
+        	'label' => false,
 	        'multiple' => true,
+//	        Mapped false car pas lié ici à la base de donnée
 	        'mapped' => false,
 	        'required' => false,
 	        'constraints' => $imageConstraints,

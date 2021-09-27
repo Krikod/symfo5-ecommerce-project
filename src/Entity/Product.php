@@ -39,7 +39,7 @@ class Product
      * @ORM\Column(type="string", length=255)
      */
     private $slug;
-
+// Todo supprimer mainPicture
     /**
      * @ORM\Column(type="string", length=255)
      */
@@ -203,13 +203,22 @@ class Product
 
     public function removeImage(Images $image): self
     {
-        if ($this->images->removeElement($image)) {
-            // set the owning side to null (unless already changed)
+    	if ($this->images->contains( $image)) {
+		    $this->images->removeElement($image);
+		    // set the owning side to null (unless already changed)
             if ($image->getProduct() === $this) {
-                $image->setProduct(null);
+	            $image->setProduct( null );
             }
-        }
+	    }
+	    return $this;
 
-        return $this;
+//        if ($this->images->removeElement($image)) {
+//            // set the owning side to null (unless already changed)
+//            if ($image->getProduct() === $this) {
+//                $image->setProduct(null);
+//            }
+//        }
+//
+//        return $this;
     }
 }
