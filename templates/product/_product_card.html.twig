@@ -1,11 +1,11 @@
 <div class="card">
     {#<img src="{{ p.mainPicture }}" class="img-fluid" alt="image de {{ p.name }}">#}
-    {#{% for image in product.images %}#}
-        {#<div>#}
-            {#<img src="{{ asset('/uploads/'~ image.name) }}" width="400" alt="Image de {{ product.name }}"#}
-                 {#class="img-fluid">#}
-        {#</div>#}
-    {#{% endfor %}#}
+    {% for image in p.images %}
+        <div>
+            <img src="{{ asset('/uploads/'~ image.name) }}" width="400" alt="Image de {{ p.name }}"
+                 class="img-fluid">
+        </div>
+    {% endfor %}
     <div class="card-body">
         <h4 class="card-title">{{ p.name }} ({{ p.price|amount }})</h4>
         {# todo Ne pas afficher badge dans Category ou sans include si card différente#}

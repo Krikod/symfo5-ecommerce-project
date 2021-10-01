@@ -31,17 +31,41 @@
 
     {# Si la route est /admin/produit/{id}/editer, on ajoute les images => simple sécurité #}
     {% if app.request.attributes.get('_route') == 'product_edit' %}
-        {#// todo visible si images#}
+        {#// todo visible si images #}
         <h2>Image(s)</h2>
-        {% for image in product.images %}
-            <div>
-                {#// todo image de#}
-                <img src="{{ asset('uploads/'~ image.name) }}" alt="Image de {{ product.name }}" width="150">
-                <a href="{{ path('product_image_delete', {'id': image.id}) }}"
-                   data-delete data-token="{{ csrf_token('delete' ~ image.id) }}"
-                >Supprimer l'image</a>
+
+        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                {% for image in product.images %}
+                    {% if loop.first %}{% set active = 'active' %}{% else %}{% set active = '' %}{% endif %}
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{ loop.index0 }}" class="{{ active }}" aria-current="true"></button>
+                {% endfor %}
             </div>
-        {% endfor %}
+            <div class="carousel-inner">
+                {% for image in product.images %}
+                    {% if loop.first %}{% set active = 'active' %}{% else %}{% set active = '' %}{% endif %}
+                    <div class="carousel-item {{ active }}">
+                        {#// todo image de #}
+                        <img src="{{ asset('uploads/'~ image.name) }}" alt="Image de {{ product.name }}" class="d-block w-100">
+                        <a href="{{ path('product_image_delete', {'id': image.id}) }}"
+                           data-delete data-token="{{ csrf_token('delete' ~ image.id) }}" type="button" class="btn btn-danger"
+                        >Supprimer l'image</a>
+                    </div>
+                    <div class="pb-3">
+                    </div>
+                {% endfor %}
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+
+
     {% endif %}
 <div class="pt-3 pb-3"></div>
     <button type="submit" class="btn btn-primary"><i class="fas fa-save fa-lg"></i>
@@ -51,5 +75,6 @@
 {% endblock %}
 
 {% block javascripts %}
+
     <script src="{{ asset('js/images.js') }}"></script>
 {% endblock %}
