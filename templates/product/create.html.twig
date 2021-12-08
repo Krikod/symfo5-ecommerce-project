@@ -10,18 +10,22 @@
     {{ form_start(formView, {'attr': {'novalidate':'novalidate'}}) }}
     {{ form_errors(formView) }}
 
-    <div class="row">
 
-        <div class="col">
+    <div class="row pb-4">
+        <div class="col-md-6">
             {{ form_row(formView.name) }}
             {{ form_row(formView.category) }}
-            {{ form_row(formView.shortDescription) }}
             {{ form_row(formView.price) }}
-
         </div>
-        <div class="col">
-            {{ form_row(formView.mainPicture) }}
-            {{ form_row(formView.uploads) }}
+        <div class="col-md-6">
+            {{ form_row(formView.shortDescription) }}
+            {#{{ form_row(formView.mainPicture) }}#}
+            <div class="pb-3"></div>
+            {{ form_row(formView.uploads, {
+                attr: {
+                    'placeholder': ''
+                }
+            })  }}
         </div>
     </div>
     {#<div class="pt-3 pb-3"></div>#}

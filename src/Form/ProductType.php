@@ -41,11 +41,11 @@ class ProductType extends AbstractType
 		        ],
 		        'divisor' => 100
 	        ])
-	        // Todo supprimer
-	        ->add('mainPicture', UrlType::class, [
-		        'label' => 'Image du produit',
-		        'attr' => ['placeholder' => 'Tapez l\'URL de l\'image']
-	        ])
+
+//	        ->add('mainPicture', UrlType::class, [
+//		        'label' => 'Image du produit',
+//		        'attr' => ['placeholder' => 'Tapez l\'URL de l\'image']
+//	        ])
 	        ->add('category', EntityType::class, [
 		        'label' => 'Catégorie',
 		        'placeholder' => '-- Choisir une catégorie --',
@@ -72,7 +72,7 @@ class ProductType extends AbstractType
 
         $builder
         ->add( 'uploads', FileType::class, [
-//        	'label' => 'Image(s) du produit',
+//        	'label' => 'Image(s)',
         	'label' => false,
 	        'multiple' => true,
 //	        Mapped false car pas lié ici à la base de donnée

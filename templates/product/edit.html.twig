@@ -12,58 +12,69 @@
     {{ form_start(formView, {'attr':{'novalidate':'novalidate'}}) }}
     {{ form_errors(formView) }}
 
-    <div class="row">
-        <div class="col">
+    <div class="row pb-4">
+        <div class="col-md-6">
             {{ form_row(formView.name) }}
             {{ form_row(formView.category) }}
-            {{ form_row(formView.shortDescription) }}
             {{ form_row(formView.price) }}
         </div>
-        <div class="col">
-            {#{{ form_row(formView.mainPicture) }}#}
-            {{ form_row(formView.uploads, {
-                attr: {
-                    'placeholder': 'Sélectionnez une image'
-                }
-            })  }}
+        <div class="col-md-6">
+            {{ form_row(formView.shortDescription) }}
+                {#{{ form_row(formView.mainPicture) }}#}
+            <div class="pb-3"></div>
+                {{ form_row(formView.uploads, {
+                    attr: {
+                        'placeholder': ''
+                    }
+                })  }}
         </div>
     </div>
 
-    {# Si la route est /admin/produit/{id}/editer, on ajoute les images => simple sécurité #}
+    {# Si la route est /admin/produit/{id}/editer", name="product_edit", on ajoute les images => simple sécurité #}
     {% if app.request.attributes.get('_route') == 'product_edit' %}
         {#// todo visible si images #}
-        <h2>Image(s)</h2>
 
-        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-indicators">
-                {% for image in product.images %}
-                    {% if loop.first %}{% set active = 'active' %}{% else %}{% set active = '' %}{% endif %}
-                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{ loop.index0 }}" class="{{ active }}" aria-current="true"></button>
-                {% endfor %}
-            </div>
-            <div class="carousel-inner">
-                {% for image in product.images %}
-                    {% if loop.first %}{% set active = 'active' %}{% else %}{% set active = '' %}{% endif %}
-                    <div class="carousel-item {{ active }}">
+    <div class="row">
+            {% for image in product.images %}
+                <div class="col-md-6 col-lg-3">
+                    <img src="{{ asset('uploads/'~ image.name) }}" alt="Image de {{ product.name }} - {{ loop.index }}" class="d-block w-100 img-fluid img-thumbnail">
+                    <a href="{{ path('product_image_delete', {'id': image.id}) }}"
+                       data-delete data-token="{{ csrf_token('delete' ~ image.id) }}" type="button" class="btn btn-outline-danger"> Supprimer
+                    </a>
+                </div>
+                {#<div class="pb-3"></div>#}
+            {% endfor %}
+    </div>
+        {#<div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">#}
+            {#<div class="carousel-indicators">#}
+                {#{% for image in product.images %}#}
+                    {#{% if loop.first %}{% set active = 'active' %}{% else %}{% set active = '' %}{% endif %}#}
+                    {#<button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="{{ loop.index }}" class="{{ active }}" aria-current="true"></button>#}
+                {#{% endfor %}#}
+            {#</div>#}
+            {#<div class="carousel-inner">#}
+                {#{% for image in product.images %}#}
+                    {#{% if loop.first %}{% set active = 'active' %}{% else %}{% set active = '' %}{% endif %}#}
+                    {#<div class="carousel-item {{ active }}" style="width: 30rem">#}
                         {#// todo image de #}
-                        <img src="{{ asset('uploads/'~ image.name) }}" alt="Image de {{ product.name }}" class="d-block w-100">
-                        <a href="{{ path('product_image_delete', {'id': image.id}) }}"
-                           data-delete data-token="{{ csrf_token('delete' ~ image.id) }}" type="button" class="btn btn-danger"
-                        >Supprimer l'image</a>
-                    </div>
-                    <div class="pb-3">
-                    </div>
-                {% endfor %}
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
-        </div>
+                        {#<img src="{{ asset('uploads/'~ image.name) }}" alt="Image de {{ product.name }} - {{ loop.index }}" class="d-block w-100 img-fluid img-thumbnail">#}
+                        {#<a href="{{ path('product_image_delete', {'id': image.id}) }}"#}
+                           {#data-delete data-token="{{ csrf_token('delete' ~ image.id) }}" type="button" class="btn btn-danger fas fa-trash"#}
+                        {#></a>#}
+                    {#</div>#}
+                    {#<div class="pb-3">#}
+                    {#</div>#}
+                {#{% endfor %}#}
+            {#</div>#}
+            {#<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">#}
+                {#<span class="carousel-control-prev-icon" aria-hidden="true"></span>#}
+                {#<span class="visually-hidden">Previous</span>#}
+            {#</button>#}
+            {#<button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">#}
+                {#<span class="carousel-control-next-icon" aria-hidden="true"></span>#}
+                {#<span class="visually-hidden">Next</span>#}
+            {#</button>#}
+        {#</div>#}
 
 
     {% endif %}
@@ -75,6 +86,5 @@
 {% endblock %}
 
 {% block javascripts %}
-
-    <script src="{{ asset('js/images.js') }}"></script>
+    {#<script src="{{ asset('js/zoom.js') }}"></script>#}
 {% endblock %}

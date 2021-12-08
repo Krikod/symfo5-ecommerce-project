@@ -27,6 +27,7 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/egulias/email-validator" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/fakerphp/faker" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/friendsofphp/proxy-manager-lts" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/jetbrains/phpstorm-attributes" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/laminas/laminas-code" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/liorchamla/faker-prices" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/mbezhanov/faker-provider-collection" />
@@ -129,6 +130,7 @@
           <root url="file://$MODULE_DIR$/vendor/egulias/email-validator" />
           <root url="file://$MODULE_DIR$/vendor/fakerphp/faker" />
           <root url="file://$MODULE_DIR$/vendor/friendsofphp/proxy-manager-lts" />
+          <root url="file://$MODULE_DIR$/vendor/jetbrains/phpstorm-attributes" />
           <root url="file://$MODULE_DIR$/vendor/laminas/laminas-code" />
           <root url="file://$MODULE_DIR$/vendor/liorchamla/faker-prices" />
           <root url="file://$MODULE_DIR$/vendor/mbezhanov/faker-provider-collection" />
@@ -227,6 +229,7 @@
           <root url="file://$MODULE_DIR$/vendor/egulias/email-validator" />
           <root url="file://$MODULE_DIR$/vendor/fakerphp/faker" />
           <root url="file://$MODULE_DIR$/vendor/friendsofphp/proxy-manager-lts" />
+          <root url="file://$MODULE_DIR$/vendor/jetbrains/phpstorm-attributes" />
           <root url="file://$MODULE_DIR$/vendor/laminas/laminas-code" />
           <root url="file://$MODULE_DIR$/vendor/liorchamla/faker-prices" />
           <root url="file://$MODULE_DIR$/vendor/mbezhanov/faker-provider-collection" />

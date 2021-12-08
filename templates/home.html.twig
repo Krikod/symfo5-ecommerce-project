@@ -21,10 +21,12 @@
         {% for p in products %}
             <div class="col-sm">
                 {% for image in p.images %}
-                    <div>
-                        <img src="{{ asset('/uploads/'~ image.name) }}" width="400" alt="Image de {{ p.name }}"
-                             class="img-fluid">
-                    </div>
+                    {%  if loop.first %}
+                        <div>
+                            <img src="{{ asset('/uploads/'~ image.name) }}" width="400" alt="Image de {{ p.name }}"
+                                 class="img-fluid img-thumbnail">
+                        </div>
+                    {%  endif %}
                 {% endfor %}
                {% include 'product/_product_card.html.twig' %}
             </div>

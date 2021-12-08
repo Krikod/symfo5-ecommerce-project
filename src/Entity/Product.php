@@ -39,11 +39,11 @@ class Product
      * @ORM\Column(type="string", length=255)
      */
     private $slug;
-// Todo supprimer mainPicture
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
-    private $mainPicture;
+
+//    /**
+//     * @ORM\Column(type="string", length=255)
+//     */
+//    private $mainPicture;
 
     /**
      * @ORM\Column(type="text")
@@ -117,17 +117,17 @@ class Product
         return $this;
     }
 
-    public function getMainPicture(): ?string
-    {
-        return $this->mainPicture;
-    }
-
-    public function setMainPicture(?string $mainPicture): self
-    {
-        $this->mainPicture = $mainPicture;
-
-        return $this;
-    }
+//    public function getMainPicture(): ?string
+//    {
+//        return $this->mainPicture;
+//    }
+//
+//    public function setMainPicture(?string $mainPicture): self
+//    {
+//        $this->mainPicture = $mainPicture;
+//
+//        return $this;
+//    }
 
     public function getShortDescription(): ?string
     {
