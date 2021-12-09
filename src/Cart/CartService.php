@@ -113,19 +113,35 @@ class CartService {
 	}
 
 	/**
+	 * @return int
+	 */
+	public function getTotalCartItems(  ): int {
+		$totalCartItems = 0;
+
+		foreach ($this->getCart() as $id => $qty) {
+			$product = $this->repo->find( $id);
+			if (!$product) {
+				continue;
+			}
+			$totalCartItems += $qty;
+		}
+		return $totalCartItems;
+	}
+
+	/**
 	 * @return array
 	 */
 	public function getDetailedCartItems() : array {
 		$detailedCart = [];
-
+		$totalItemCart = [];
 		foreach ($this->getCart() as $id => $qty) {
 			$product = $this->repo->find( $id);
-
 			if (!$product) {
 				continue;
 			}
 
 			$detailedCart[] = new CartItem( $product, $qty);
+
 		}
 
 		return $detailedCart;

@@ -17,11 +17,12 @@
 
         {% for p in category.products %}
             <div class="col-lg-3 col-md-6">
+                <div class="card">
                 {% for image in p.images %}
                     {%  if loop.first %}
                         <div>
                             <img src="{{ asset('/uploads/'~ image.name) }}" width="400" alt="Image de {{ p.name }}"
-                                 class="img-fluid d-block mb-2 img-thumbnail">
+                                 class="img-fluid d-block img-thumbnail">
                         </div>
                     {%  endif %}
                 {% endfor %}

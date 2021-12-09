@@ -1,4 +1,4 @@
-<div class="card">
+
     {#<img src="{{ p.image }}" class="img-fluid" alt="image de {{ p.image.name }}">#}
     {#{% for image in p.images %}#}
         {#<div>#}
@@ -14,15 +14,15 @@
         {# todo Ne pas afficher badge dans Category ou sans include si card différente#}
         <span class="badge badge-info">{{ p.category.name }}</span>
         <p class="card-text">{{ p.shortDescription }}</p>
+        <a href="{{ path('cart_add', {'id': p.id}) }}" class="btn btn-success btn-sm">Ajouter au panier</a>
         <a href="{{ path('product_show', {
             'category_slug': p.category.slug,
             'slug': p.slug
         }) }}" class="btn btn-outline-secondary btn-sm">Détails</a>
-        <a href="{{ path('cart_add', {'id': p.id}) }}" class="btn btn-success btn-sm">Ajouter au panier</a>
 
         {% if is_granted('ROLE_ADMIN') %}
-            <a class="btn btn-warning btn-sm" href="{{ path('product_edit', {'id': p.id}) }}">Editer</a>
-            <a class="btn btn-danger fas fa-trash btn-sm" href="{{ path('product_delete', {'id': p.id}) }}"></a>
+            <a class="btn btn-warning btn-sm m-2" href="{{ path('product_edit', {'id': p.id}) }}">Editer</a>
+            <a class="btn btn-danger fas fa-trash btn-sm m-2" href="{{ path('product_delete', {'id': p.id}) }}"></a>
         {% endif %}
     </div>
 </div>

@@ -79,9 +79,12 @@ class CartController extends AbstractController
 		$detailedCart = $this->cart_service->getDetailedCartItems();
 		$total = $this->cart_service->getTotal();
 
+//		$totalCartItems = $this->cart_service->getTotalCartItems();
+
 		return $this->render( 'cart/index.html.twig', [
 			'items' => $detailedCart,
 			'total' => $total,
+//			'totalItems' => $totalCartItems,
 			'confirmationForm' => $form->createView()
 		]);
     }
