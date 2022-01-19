@@ -5,6 +5,7 @@
 {% block body %}
     <h1>Mes commandes</h1>
 
+    {% if purchases.count() > 0 %}
     <table class="table">
         <thead>
         <tr>
@@ -33,5 +34,8 @@
             {% endfor %}
         </tbody>
     </table>
+{% else %}
+Vous n'avez rien commandé...
+{% endif %}
 
 {% endblock %}

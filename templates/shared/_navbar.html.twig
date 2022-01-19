@@ -22,41 +22,84 @@
             {#{% endfor %}#}
 
             {% for c in categoryRepository.findAll() %}
- {#Todo exclure Autre = or c.slug is same as 'Autre'#}
                 {% if c.products.count() > 0 %}
-                     {#TODO ou faire un service CategoryUtils #}
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('product_category', {'slug': c.slug}) }}">{{ c.name }}</a>
-                    </li>
+                    {# Affiche les catégories dans la Navbar sauf "AUTRE" #}
+                    {% if c.name matches '/autre/i' %}
+                        {# On n'affiche pas "AUTRE" #}
+                        {% else %}
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('product_category',
+                                {'slug': c.slug}) }}">{{ c.name }}</a>
+                            </li>
+                    {% endif %}
                 {% endif %}
             {% endfor %}
 
-        </ul>
-        <ul class="navbar-nav">
-            <li class="nav-item">
-                <a href="{{ path('cart_show') }}" class="nav-link">
-                    <i class="fas fa-shopping-cart"></i>
 
-                    {% if cartService.totalCartItems %}
-                        ({{ cartService.totalCartItems }}) Panier ({{ cartService.total|amount }})
-                        {% else %}
-                            Panier
+            {# Affichage de 'AUTRE' à la fin #}
+            {% for c in categoryRepository.findAll() %}
+                {% if c.products.count() > 0 %}
+                    {% if c.name matches '/autre/i' %}
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('product_category',
+                            {'slug': c.slug}) }}">{{ c.name }}</a>
+                        </li>
                     {% endif %}
+                {% endif %}
+            {% endfor %}
 
-                </a>
-            </li>
-            {% if app.user %}
-                <li class="nav-item">
-                    <a href="{{ path('purchase_index') }}" class="nav-link">
-                        Mes commandes
-                    </a>
-                </li>
-                <li class="nav-item"><a href="{{ path('security_logout') }}" class="btn btn-danger">déconnexion</a></li>
-            {% else %}
-                <li class="nav-item"><a href="#" class="nav-link">inscription</a></li>
-                <li class="nav-item"><a href="{{ path('security_login') }}" class="btn btn-success">connexion</a></li>
-            {% endif %}
+            {#{% if in categoryRepository.products.name matches '/autre/i' %}#}
+                {#<li class="nav-item">#}
+                    {#<a class="nav-link" href="{{ path('product_category',#}
+                    {#{'slug': c.slug}) }}">{{ c.name }}</a>#}
+                {#</li>#}
+            {#{% endif %}#}
+
         </ul>
+        <div class="position-absolute end-0">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+
+                    <a href="{{ path('cart_show') }}" class="nav-link">
+                        {% if cartService.totalCartItems %}
+                            {#({{ cartService.totalCartItems }}) Panier#}
+
+                            <span class="position-relative"
+                                  data-toggle="tooltip" data-placement="bottom"
+                                  title="+{{ cartService.total|amount }}">
+                                {#<i class="fas fa-shopping-cart"></i>#}
+                                Panier
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                                style="background-color:Salmon!important;">
+                                {{ cartService.totalCartItems }}
+                                    <span class="visually-hidden">Total cart items</span></span>
+                            </span>
+
+
+
+
+
+                            {% else %}
+                                Panier
+
+                        {% endif %}
+                    </a>
+
+                </li>
+                {% if app.user %}
+                    <li class="nav-item">
+                        <a href="{{ path('purchase_index') }}" class="nav-link">
+                            Mes commandes
+                        </a>
+                    </li>
+                    <li class="nav-item nav-link">Bienvenue, {{ app.user.email }}</li>
+                    <li class="nav-item"><a href="{{ path('security_logout') }}" class="btn btn-danger">déconnexion</a></li>
+                {% else %}
+                    <li class="nav-item"><a href="#" class="nav-link">inscription</a></li>
+                    <li class="nav-item"><a href="{{ path('security_login') }}" class="btn btn-success">connexion</a></li>
+                {% endif %}
+            </ul>
+        </div>
 
     </div>
 </nav>

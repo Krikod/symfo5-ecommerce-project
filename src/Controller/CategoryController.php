@@ -81,7 +81,6 @@ class CategoryController extends AbstractController {
 		// Récupérer les catégories
 		$categories = $repo->findAll();
 
-
 		return $this->render('category/list.html.twig', [
 			'categories' => $categories,
 		]);
