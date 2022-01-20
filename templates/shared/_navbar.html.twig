@@ -8,7 +8,8 @@
 {% endif %}
 
     <a class="navbar-brand ms-4" href="/">K-Shop</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03" aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor03"
+            aria-controls="navbarColor03" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
 
@@ -21,6 +22,7 @@
                 {#</li>#}
             {#{% endfor %}#}
 
+            {# categoryRepository injecté dans les Globals de Twig --> twig.yaml #}
             {% for c in categoryRepository.findAll() %}
                 {% if c.products.count() > 0 %}
                     {# Affiche les catégories dans la Navbar sauf "AUTRE" #}
@@ -35,18 +37,27 @@
                 {% endif %}
             {% endfor %}
 
+            {# Define categoryEndNavbar in twig Globals #}
+            {% set cat_fin_navbar = categoryRepository.findOneBy({'name':categoryEndNavbar}) %}
+
+            {% if cat_fin_navbar and cat_fin_navbar.products.count() > 0 %}
+                <li class="nav-item">
+                     <a class="nav-link" href="{{ path('product_category',
+                     {'slug': cat_fin_navbar.slug}) }}">{{ cat_fin_navbar.name }}</a>
+                </li>
+            {% endif %}
 
             {# Affichage de 'AUTRE' à la fin #}
-            {% for c in categoryRepository.findAll() %}
-                {% if c.products.count() > 0 %}
-                    {% if c.name matches '/autre/i' %}
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ path('product_category',
-                            {'slug': c.slug}) }}">{{ c.name }}</a>
-                        </li>
-                    {% endif %}
-                {% endif %}
-            {% endfor %}
+            {#{% for c in categoryRepository.findAll() %}#}
+                {#{% if c.products.count() > 0 %}#}
+                    {#{% if c.name matches '/autre/i' %}#}
+                        {#<li class="nav-item">#}
+                            {#<a class="nav-link" href="{{ path('product_category',#}
+                            {#{'slug': c.slug}) }}">{{ c.name }}</a>#}
+                        {#</li>#}
+                    {#{% endif %}#}
+                {#{% endif %}#}
+            {#{% endfor %}#}
 
             {#{% if in categoryRepository.products.name matches '/autre/i' %}#}
                 {#<li class="nav-item">#}
