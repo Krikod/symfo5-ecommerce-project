@@ -16,53 +16,51 @@
     <div class="collapse navbar-collapse" id="navbarColor03">
         <ul class="navbar-nav mr-auto">
 
-            {#{% for c in categoryRepository %}#}
-                {#<li class="nav-item">#}
-                    {#<a class="nav-link" href="{{ path('product_category', {'slug': c.slug}) }}">{{ c.name }}</a>#}
-                {#</li>#}
-            {#{% endfor %}#}
-
-            {# categoryRepository injecté dans les Globals de Twig --> twig.yaml #}
-            {% for c in categoryRepository.findAll() %}
+            {# Service CategoryUtils #}
+            {% for c in categoryUtils.catListAllButLast() %}
                 {% if c.products.count() > 0 %}
-                    {# Affiche les catégories dans la Navbar sauf "AUTRE" #}
-                    {% if c.name matches '/autre/i' %}
-                        {# On n'affiche pas "AUTRE" #}
-                        {% else %}
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ path('product_category',
-                                {'slug': c.slug}) }}">{{ c.name }}</a>
-                            </li>
-                    {% endif %}
+                 {#Affiche les catégories non vides dans la Navbar sauf "AUTRE" #}
+                <li class="nav-item">
+                <a class="nav-link" href="{{ path('product_category', {'slug': c.slug}) }}">{{ c.name }}</a>
+                </li>
                 {% endif %}
             {% endfor %}
 
-            {# Define categoryEndNavbar in twig Globals #}
-            {% set cat_fin_navbar = categoryRepository.findOneBy({'name':categoryEndNavbar}) %}
+            {% for c in categoryUtils.catOnlyLast() %}
+                {% if c.products.count() > 0 %}
+                    {#Affiche les catégories non vides dans la Navbar sauf "AUTRE" #}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('product_category', {'slug': c.slug}) }}">{{ c.name }}</a>
+                    </li>
+                {% endif %}
+            {% endfor %}
 
-            {% if cat_fin_navbar and cat_fin_navbar.products.count() > 0 %}
-                <li class="nav-item">
-                     <a class="nav-link" href="{{ path('product_category',
-                     {'slug': cat_fin_navbar.slug}) }}">{{ cat_fin_navbar.name }}</a>
-                </li>
-            {% endif %}
 
-            {# Affichage de 'AUTRE' à la fin #}
+
+
+            {# categoryRepository injecté dans les Globals de Twig --> twig.yaml #}
             {#{% for c in categoryRepository.findAll() %}#}
                 {#{% if c.products.count() > 0 %}#}
+                    {# Affiche les catégories dans la Navbar sauf "AUTRE" #}
                     {#{% if c.name matches '/autre/i' %}#}
-                        {#<li class="nav-item">#}
-                            {#<a class="nav-link" href="{{ path('product_category',#}
-                            {#{'slug': c.slug}) }}">{{ c.name }}</a>#}
-                        {#</li>#}
+                        {# On n'affiche pas "AUTRE" #}
+                        {#{% else %}#}
+                            {#<li class="nav-item">#}
+                                {#<a class="nav-link" href="{{ path('product_category',#}
+                                {#{'slug': c.slug}) }}">{{ c.name }}</a>#}
+                            {#</li>#}
                     {#{% endif %}#}
                 {#{% endif %}#}
             {#{% endfor %}#}
 
-            {#{% if in categoryRepository.products.name matches '/autre/i' %}#}
+             {#Affichage de 'AUTRE' à la fin #}
+             {#Define categoryEndNavbar in twig Globals #}
+            {#{% set cat_fin_navbar = categoryRepository.findOneBy({'name':categoryEndNavbar}) %}#}
+
+            {#{% if cat_fin_navbar and cat_fin_navbar.products.count() > 0 %}#}
                 {#<li class="nav-item">#}
-                    {#<a class="nav-link" href="{{ path('product_category',#}
-                    {#{'slug': c.slug}) }}">{{ c.name }}</a>#}
+                     {#<a class="nav-link" href="{{ path('product_category',#}
+                     {#{'slug': cat_fin_navbar.slug}) }}">{{ cat_fin_navbar.name }}</a>#}
                 {#</li>#}
             {#{% endif %}#}
 
