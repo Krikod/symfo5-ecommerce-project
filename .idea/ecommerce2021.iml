@@ -27,8 +27,10 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/egulias/email-validator" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/fakerphp/faker" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/friendsofphp/proxy-manager-lts" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/imagine/imagine" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/jetbrains/phpstorm-attributes" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/laminas/laminas-code" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/liip/imagine-bundle" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/liorchamla/faker-prices" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/mbezhanov/faker-provider-collection" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/monolog/monolog" />
@@ -76,6 +78,7 @@
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/polyfill-php73" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/polyfill-php80" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/polyfill-php81" />
+      <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/process" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/property-access" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/property-info" />
       <excludeFolder url="file://$MODULE_DIR$/vendor/symfony/proxy-manager-bridge" />
@@ -130,8 +133,10 @@
           <root url="file://$MODULE_DIR$/vendor/egulias/email-validator" />
           <root url="file://$MODULE_DIR$/vendor/fakerphp/faker" />
           <root url="file://$MODULE_DIR$/vendor/friendsofphp/proxy-manager-lts" />
+          <root url="file://$MODULE_DIR$/vendor/imagine/imagine" />
           <root url="file://$MODULE_DIR$/vendor/jetbrains/phpstorm-attributes" />
           <root url="file://$MODULE_DIR$/vendor/laminas/laminas-code" />
+          <root url="file://$MODULE_DIR$/vendor/liip/imagine-bundle" />
           <root url="file://$MODULE_DIR$/vendor/liorchamla/faker-prices" />
           <root url="file://$MODULE_DIR$/vendor/mbezhanov/faker-provider-collection" />
           <root url="file://$MODULE_DIR$/vendor/monolog/monolog" />
@@ -179,6 +184,7 @@
           <root url="file://$MODULE_DIR$/vendor/symfony/polyfill-php73" />
           <root url="file://$MODULE_DIR$/vendor/symfony/polyfill-php80" />
           <root url="file://$MODULE_DIR$/vendor/symfony/polyfill-php81" />
+          <root url="file://$MODULE_DIR$/vendor/symfony/process" />
           <root url="file://$MODULE_DIR$/vendor/symfony/property-access" />
           <root url="file://$MODULE_DIR$/vendor/symfony/property-info" />
           <root url="file://$MODULE_DIR$/vendor/symfony/proxy-manager-bridge" />
@@ -229,8 +235,10 @@
           <root url="file://$MODULE_DIR$/vendor/egulias/email-validator" />
           <root url="file://$MODULE_DIR$/vendor/fakerphp/faker" />
           <root url="file://$MODULE_DIR$/vendor/friendsofphp/proxy-manager-lts" />
+          <root url="file://$MODULE_DIR$/vendor/imagine/imagine" />
           <root url="file://$MODULE_DIR$/vendor/jetbrains/phpstorm-attributes" />
           <root url="file://$MODULE_DIR$/vendor/laminas/laminas-code" />
+          <root url="file://$MODULE_DIR$/vendor/liip/imagine-bundle" />
           <root url="file://$MODULE_DIR$/vendor/liorchamla/faker-prices" />
           <root url="file://$MODULE_DIR$/vendor/mbezhanov/faker-provider-collection" />
           <root url="file://$MODULE_DIR$/vendor/monolog/monolog" />
@@ -278,6 +286,7 @@
           <root url="file://$MODULE_DIR$/vendor/symfony/polyfill-php73" />
           <root url="file://$MODULE_DIR$/vendor/symfony/polyfill-php80" />
           <root url="file://$MODULE_DIR$/vendor/symfony/polyfill-php81" />
+          <root url="file://$MODULE_DIR$/vendor/symfony/process" />
           <root url="file://$MODULE_DIR$/vendor/symfony/property-access" />
           <root url="file://$MODULE_DIR$/vendor/symfony/property-info" />
           <root url="file://$MODULE_DIR$/vendor/symfony/proxy-manager-bridge" />

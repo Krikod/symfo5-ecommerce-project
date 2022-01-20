@@ -24,7 +24,7 @@
                 {% for image in p.images %}
                     {%  if loop.first %}
                         <div>
-                            <img src="{{ asset('/uploads/'~ image.name) }}"  alt="Image de {{ p.name }}"
+                            <img src="{{ asset('/uploads/'~ image.name) | imagine_filter('miniature') }}"  alt="Image de {{ p.name }}"
                                  class="img-fluid img-thumbnail mx-auto">
                         </div>
                     {%  endif %}
